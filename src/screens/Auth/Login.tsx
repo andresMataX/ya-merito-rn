@@ -9,11 +9,15 @@ interface Props extends StackScreenProps<RootStackParams, any> { }
 
 export const Login = ({ navigation, route }: Props) => {
 
+  // const [fontsLoaded] = useFonts({
+  //   MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
+  //   MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
+  //   MaliRegular: require('../../../assets/fonts/Mali-Regular.ttf'),
+  //   MaliSemiBold: require('../../../assets/fonts/Mali-SemiBold.ttf')
+  // });
+
   const [fontsLoaded] = useFonts({
-    MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
-    MaliRegular: require('../../../assets/fonts/Mali-Regular.ttf'),
-    MaliSemiBold: require('../../../assets/fonts/Mali-SemiBold.ttf')
   });
 
   if (!fontsLoaded) {
