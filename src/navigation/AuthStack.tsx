@@ -9,7 +9,15 @@ const { Navigator, Screen } = createStackNavigator<RootStackParams>();
 
 export const AuthStak = () => {
   return (
-    <Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="Login" screenOptions={{
+      headerShown: false,
+      headerStyle: {
+        elevation: 0
+      },
+      cardStyle: {
+        backgroundColor: 'white'
+      },
+    }}>
       <Screen name="Login" component={Login} />
       <Screen name="SignUp" component={SignUp} />
       <Screen name="MenuLateral" component={MenuLateral} />

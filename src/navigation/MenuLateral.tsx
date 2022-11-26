@@ -7,7 +7,14 @@ const Drawer = createDrawerNavigator();
 export const MenuLateral = () => {
 
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator screenOptions={{
+      headerStyle: {
+        elevation: 0
+      },
+      sceneContainerStyle: {
+        backgroundColor: 'white'
+      }
+    }}>
       <Drawer.Screen name="TravelStart" component={TravelStart} />
       <Drawer.Screen name="History" component={History} />
     </Drawer.Navigator>
