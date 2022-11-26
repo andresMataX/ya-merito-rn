@@ -1,4 +1,5 @@
 export type RootStackParams = {
   Login: undefined,
-  SignUp: undefined
+  SignUp: undefined,
+  MenuLateral: undefined
 }
