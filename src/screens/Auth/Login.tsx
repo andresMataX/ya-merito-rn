@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
+import { FormLogin } from '../../components/Auth/Input';
 
 export const Login = () => {
 
@@ -23,7 +24,7 @@ export const Login = () => {
       />
       <View style={{ height: 72 }} />
       <View style={styles.formLogin}>
-        <Text style={styles.title}>Ingresa tu contraseña</Text>
+        {/* <FormLogin /> */}
       </View>
     </View>
   )
@@ -42,6 +43,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'MaliLight',
-    fontSize: 16
+    fontSize: 24
   }
 });
