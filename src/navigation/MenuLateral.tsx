@@ -1,9 +1,8 @@
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { History } from '../screens/History/History';
 import { TravelStart } from '../screens/Travel/TravelStart';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
 
 const Drawer = createDrawerNavigator();
@@ -47,13 +46,42 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
         <Text style={styles.title}>¡Ya Merito!</Text>
 
-        <View style={{ height: 40 }} />
+        <View style={{ height: 32 }} />
 
         <View>
           <Text style={styles.titleSeccion}>General</Text>
-          <ButtonOpcion navigation={navigation} descriptors={descriptors} state={state} />
-          <ButtonOpcion navigation={navigation} descriptors={descriptors} state={state} />
-          <ButtonOpcion navigation={navigation} descriptors={descriptors} state={state} />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Viajar"
+            iconName="map-outline"
+            screenName='TravelStart'
+          />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Favoritos"
+            iconName="star-outline"
+            screenName=''
+          />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Historial de viajes"
+            iconName="list-outline"
+            screenName='History'
+          />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Ajustes"
+            iconName="settings-outline"
+            screenName=''
+          />
         </View>
 
       </View>
@@ -75,17 +103,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'MaliExtraLight'
   },
-  button: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    color: 'black',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8
-  },
-  buttonText: {
-    fontSize: 20,
-    fontFamily: 'MaliLight'
-  }
 });

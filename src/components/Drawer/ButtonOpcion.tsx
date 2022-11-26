@@ -3,17 +3,23 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const ButtonOpcion = ({ navigation }: DrawerContentComponentProps) => {
+interface Props extends DrawerContentComponentProps {
+  iconName: string,
+  screenName: string,
+  buttonText: string
+}
+
+export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText }: Props) => {
 
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate('History')}
+      onPress={() => navigation.navigate(screenName)}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Icon name='star-outline' size={16} />
+        <Icon name={iconName} size={16} />
         <View style={{ width: 8 }} />
-        <Text style={styles.buttonText}>Historial de viajes</Text>
+        <Text style={styles.buttonText}>{buttonText}</Text>
       </View>
       <Icon name='chevron-forward-outline' size={20} />
     </TouchableOpacity>
