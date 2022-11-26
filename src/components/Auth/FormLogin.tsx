@@ -47,6 +47,7 @@ export const FormLogin = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
+          onPress={() => navigation.navigate('MenuLateral')}
         >
           <Text style={styles.buttonText}>Ingresar</Text>
           <View style={{ width: 8 }} />
