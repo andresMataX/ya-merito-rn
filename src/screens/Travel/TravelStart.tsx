@@ -1,6 +1,6 @@
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import React, { useEffect } from 'react';
-import { Button, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends DrawerScreenProps<any, any> { }
