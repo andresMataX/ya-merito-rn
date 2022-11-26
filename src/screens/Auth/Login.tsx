@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-import { FormLogin } from '../../components/Auth/Input';
+import { FormLogin } from '../../components/Auth/FormLogin';
 
 export const Login = () => {
 
@@ -24,7 +24,7 @@ export const Login = () => {
       />
       <View style={{ height: 72 }} />
       <View style={styles.formLogin}>
-        {/* <FormLogin /> */}
+        <FormLogin />
       </View>
     </View>
   )

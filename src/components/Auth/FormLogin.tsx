@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 export const FormLogin = () => {
@@ -35,8 +35,8 @@ export const FormLogin = () => {
           style={styles.button}
         >
           <Text style={styles.buttonText}>Ingresar</Text>
-          <View style={{ width: '8' }} />
-          {/* <Icon name="log-in-outline" size={20} /> */}
+          <View style={{ width: 8 }} />
+          <Icon name="log-in-outline" size={20} />
         </TouchableOpacity>
       </View>
     </View>
