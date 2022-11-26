@@ -3,7 +3,6 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-nativ
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
 export const FormLogin = () => {
 
   const [fontsLoaded] = useFonts({
@@ -17,28 +16,40 @@ export const FormLogin = () => {
 
   return (
     <View>
+
       <Text style={styles.label}>Correo</Text>
       <TextInput
+        keyboardType='email-address'
+        autoCapitalize='none'
         style={styles.input}
         placeholder="Introduce tu correo"
         placeholderTextColor="5F5F5F"
       />
+
       <View style={{ height: 16 }} />
+
       <Text style={styles.label}>Contraseña</Text>
       <TextInput
+        autoComplete='off'
+        autoCapitalize='none'
+        secureTextEntry={true}
         style={styles.input}
         placeholder="Introduce tu contraseña"
         placeholderTextColor="5F5F5F"
       />
+
+      <View style={{ height: 64 }} />
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
         >
           <Text style={styles.buttonText}>Ingresar</Text>
           <View style={{ width: 8 }} />
-          <Icon name="log-in-outline" size={20} />
+          <Icon name="log-in-outline" size={28} />
         </TouchableOpacity>
       </View>
+
     </View>
   )
 }
@@ -64,7 +75,10 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     color: 'black',
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   buttonText: {
     fontSize: 24,
