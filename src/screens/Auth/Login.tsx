@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { FormLogin } from '../../components/Auth/FormLogin';
 

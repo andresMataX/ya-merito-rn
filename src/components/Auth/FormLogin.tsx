@@ -50,6 +50,18 @@ export const FormLogin = () => {
         </TouchableOpacity>
       </View>
 
+      <View style={{ height: 32 }} />
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Crear Cuenta</Text>
+          <View style={{ width: 8 }} />
+          <Icon name="person-add-outline" size={28} />
+        </TouchableOpacity>
+      </View>
+
     </View>
   )
 }
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: 1,
     color: 'black',
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
     paddingVertical: 4,
     flexDirection: 'row',
     alignItems: 'center'
