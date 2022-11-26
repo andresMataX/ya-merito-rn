@@ -1,7 +1,7 @@
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { History } from '../screens/History/History';
 import { TravelStart } from '../screens/Travel/TravelStart';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
 
@@ -82,6 +82,42 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             iconName="settings-outline"
             screenName=''
           />
+        </View>
+
+        <View style={{ height: 32 }} />
+
+        <View>
+          <Text style={styles.titleSeccion}>Cuenta</Text>
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Cambiar contraseña"
+            iconName="lock-open-outline"
+            screenName=''
+          />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Cerrar sesión"
+            iconName="log-out-outline"
+            screenName=''
+          />
+          <ButtonOpcion
+            navigation={navigation}
+            descriptors={descriptors}
+            state={state}
+            buttonText="Eliminar cuenta"
+            iconName="trash-outline"
+            screenName=''
+          />
+        </View>
+
+        <View style={{ height: 32 }} />
+
+        <View style={{ width: '100%', alignItems: 'center' }}>
+          <Image source={require('../../assets/camión.png')} style={{ width: 200, height: 100 }} />
         </View>
 
       </View>
