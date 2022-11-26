@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { FormLogin } from '../../components/Auth/FormLogin';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParams } from '../../library/types';
 
-export const Login = () => {
+interface Props extends StackScreenProps<RootStackParams, any> { }
+
+export const Login = ({ navigation, route }: Props) => {
 
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
@@ -24,7 +28,8 @@ export const Login = () => {
       />
       <View style={{ height: 72 }} />
       <View style={styles.formLogin}>
-        <FormLogin />
+        <Text style={styles.title}>Ingresa con tu cuenta</Text>
+        <FormLogin navigation={navigation} route={route} />
       </View>
     </View>
   )

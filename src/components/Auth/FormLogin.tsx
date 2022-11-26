@@ -2,8 +2,12 @@ import React from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParams } from '../../library/types';
 
-export const FormLogin = () => {
+interface Props extends StackScreenProps<RootStackParams, any> { }
+
+export const FormLogin = ({ navigation }: Props) => {
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -55,6 +59,7 @@ export const FormLogin = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
+          onPress={() => navigation.navigate('SignUp')}
         >
           <Text style={styles.buttonText}>Crear Cuenta</Text>
           <View style={{ width: 8 }} />
