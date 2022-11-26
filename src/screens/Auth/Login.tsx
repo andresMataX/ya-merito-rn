@@ -1,14 +1,23 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View, Image, StyleSheet } from 'react-native';
 
 export const Login = () => {
 
-  const inset = useSafeAreaInsets();
-
   return (
-    <View style={{ top: inset.top }}>
-      <Text style={{ color: 'black' }}>Login</Text>
+    <View style={{ ...styles.container }}>
+      <Image
+        source={require('../../../assets/logo_app.jpeg')}
+        style={{ width: 200, height: 175 }}
+      />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'red',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+});
