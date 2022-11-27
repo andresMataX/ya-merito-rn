@@ -1,7 +1,8 @@
-import { DrawerScreenProps } from '@react-navigation/drawer';
 import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -25,7 +26,19 @@ export const TravelStart = ({ navigation }: Props) => {
 
   return (
     <View>
-      <Text style={{ color: 'black' }}>TravelStart</Text>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        style={{
+          width: '100%',
+          height: '100%'
+        }}
+      />
     </View>
   )
 }
