@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { useFonts } from 'expo-font';
 import { Maps } from '../../components/Travel/Maps';
 
@@ -90,7 +89,7 @@ export const TravelStart = ({ navigation }: Props) => {
 
       </View>
 
-      <View style={{ height: 24 }} />
+      <View style={{ height: 8 }} />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -102,7 +101,6 @@ export const TravelStart = ({ navigation }: Props) => {
           <Icon name="navigate-circle-outline" size={28} />
         </TouchableOpacity>
       </View>
-
 
     </View>
   )
