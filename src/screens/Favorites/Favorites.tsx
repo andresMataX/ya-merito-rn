@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { NuevoFavoritoModal } from '../../components/Favorites/NuevoFavoritoModal';
+import { NuevoFavoritoModal } from '../../components/Favorites/Modal/NuevoFavoritoModal';
 
 export const Favorites = () => {
 
