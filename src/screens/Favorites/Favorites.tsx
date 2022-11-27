@@ -10,11 +10,11 @@ import { Travel } from '../../interfaces/Travel/Travel';
 
 export const Favorites = () => {
 
-  const { favoritoState, getFavoritos, setDestino: setFavorito } = useContext(FavoritoContext);
+  const { favoritoState, getFavoritos, setDestino, setFavorito, deleteFavorito } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
   const { viajeState, getViajes } = useContext(ViajeContext);
-  const { viajes } = viajeState;
+  const { isLoading: isLoadingViajes, viajes } = viajeState;
 
   useEffect(() => {
     getViajes()
@@ -23,7 +23,7 @@ export const Favorites = () => {
 
   const [visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal] = useState(false);
 
-  if (isLoading) {
+  if (isLoading || isLoadingViajes) {
     return (
       <View
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
@@ -38,7 +38,7 @@ export const Favorites = () => {
         <Text style={styles.destinoText}>{data.direccion}</Text>
         <TouchableOpacity
           onPress={() => {
-            setFavorito(data)
+            setDestino(data)
             setVisibleNuevoFavoritoModal(true)
           }}
         >
@@ -48,26 +48,34 @@ export const Favorites = () => {
     )
   }
 
-  const renderFavorito = ({ alias, icono }: Favorite) => {
+  const renderFavorito = (data: Favorite) => {
     return (
       <View style={styles.favoritoContainer}>
-        <Icon name={`${icono}-outline`} size={32} />
+        <Icon name={`${data.icono}-outline`} size={32} />
 
         <View style={{ width: 8 }} />
 
         <View style={styles.favoritoAliasContainer}>
           <Text style={styles.favoritoAlias}>
-            {alias}
+            {data.alias}
           </Text>
 
           <View style={styles.favoritoAccionesContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setFavorito(data)
+              }}
+            >
               <Icon name='create-outline' size={32} />
             </TouchableOpacity>
 
             <View style={{ width: 4 }} />
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                deleteFavorito(data.id)
+              }}
+            >
               <Icon name='trash-outline' size={32} />
             </TouchableOpacity>
           </View>

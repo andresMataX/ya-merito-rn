@@ -5,19 +5,20 @@ import { favoritoReducer } from './favoritoReducer';
 import { meritoAPI } from '../../api/yaMeritoApi';
 import { AuthContext } from '../authContext/AuthContext';
 import { Travel } from '../../interfaces/Travel/Travel';
-import { ViajeContext } from "../viajeContext/ViajeContext";
 import { Favorite, NuevoFavorito } from '../../interfaces/Favorite/Favorite';
 
 export interface FavoritoState {
   isLoading: boolean
   favoritos: Favorite[]
   destinoSeleccionado: Travel
+  favoritoSeleccionado: Favorite
 }
 
 export const favoritoInitialState: FavoritoState = {
   isLoading: false,
   favoritos: [],
-  destinoSeleccionado: {} as Travel
+  destinoSeleccionado: {} as Travel,
+  favoritoSeleccionado: {} as Favorite
 }
 
 export interface FavoritoContextProps {
@@ -25,6 +26,8 @@ export interface FavoritoContextProps {
   getFavoritos: () => Promise<void>,
   postFavorito: ({ alias, icono, id_direccion }: NuevoFavorito) => Promise<void>,
   setDestino: (destino: Travel) => void,
+  setFavorito: (favorito: Favorite) => void,
+  deleteFavorito: (favoritoID: number) => Promise<void>,
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);
@@ -70,6 +73,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
 
 
   const postFavorito = async ({ alias, icono, id_direccion }: NuevoFavorito) => {
+
     dispatch({ type: 'loadingState', payload: true });
 
     try {
@@ -104,12 +108,50 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
+  const deleteFavorito = async (favoritoID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+
+      await meritoAPI.delete(`/api/favorito/${favoritoID}`)
+
+      getFavoritos()
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+    }
+
+  }
+
+
   const setDestino = (destino: Travel) => {
 
     dispatch({ type: 'setDestino', payload: destino })
 
   }
 
+
+  const setFavorito = (favorito: Favorite) => {
+
+    dispatch({ type: 'setFavorito', payload: favorito })
+
+  }
 
   return (
     <FavoritoContext.Provider
@@ -118,6 +160,8 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
         getFavoritos,
         postFavorito,
         setDestino,
+        setFavorito,
+        deleteFavorito
       }}
     >
       {children}
