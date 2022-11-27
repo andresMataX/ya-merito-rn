@@ -2,7 +2,8 @@ import React, { createContext } from "react";
 import { useReducer } from "react";
 import { Alert } from "react-native";
 import { authReducer } from './authReducer';
-import { NuevoUsuario } from '../../interfaces/Auth/Usuario';
+import { NuevoUsuario, Usuario } from '../../interfaces/Auth/Usuario';
+import { meritoAPI } from '../../api/yaMeritoApi';
 
 // Defining how the state looks like
 export interface AuthState {
@@ -34,43 +35,34 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     dispatch({ type: 'loadingState', payload: true });
 
     try {
-      const resp = await fetch(`${URL}/api/auth/login`, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password
-        }),
+
+      await meritoAPI.post('/api/auth/login', {
+        email,
+        password
       })
 
-      console.log(resp);
+      dispatch({ type: 'loadingState', payload: false });
 
-      if (!resp.ok) {
-        Alert.alert(
-          "Datos incorrectos",
-          "Email / Password no son correctos.",
-          [
-            {
-              text: "OK",
-            }
-          ],
-          {
-            cancelable: true,
-          }
-        )
-
-        return false;
-      }
+      return true;
 
     } catch (error) {
-      console.log(error);
+      Alert.alert(
+        "Datos incorrectos",
+        "Email / Password no son correctos.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+      return false;
     }
-
-    dispatch({ type: 'loadingState', payload: false });
-
-    return true;
   }
 
   const signUp = async ({ apellido, email, nombre, password }: NuevoUsuario): Promise<Boolean> => {
