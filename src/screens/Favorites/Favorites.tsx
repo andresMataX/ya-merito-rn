@@ -1,11 +1,58 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NuevoFavoritoModal } from '../../components/Favorites/Modal/NuevoFavoritoModal';
+import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { Favorite } from '../../interfaces/Favorite/Favorite';
 
 export const Favorites = () => {
 
+  const { favoritoState, getFavoritos } = useContext(FavoritoContext);
+  const { isLoading, favoritos } = favoritoState;
+
+  useEffect(() => {
+    getFavoritos()
+  }, [])
+
   const [visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal] = useState(false);
+
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
+
+  const renderItem = ({ alias }: Favorite) => {
+    return (
+      <View style={styles.favoritoContainer}>
+        <Icon name='briefcase-outline' size={32} />
+
+        <View style={{ width: 8 }} />
+
+        <View style={styles.favoritoAliasContainer}>
+          <Text style={styles.favoritoAlias}>
+            {alias}
+          </Text>
+
+          <View style={styles.favoritoAccionesContainer}>
+            <TouchableOpacity>
+              <Icon name='create-outline' size={32} />
+            </TouchableOpacity>
+
+            <View style={{ width: 4 }} />
+
+            <TouchableOpacity>
+              <Icon name='trash-outline' size={32} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -16,6 +63,14 @@ export const Favorites = () => {
       <View style={{ height: 32 }} />
 
       <View style={styles.favoritosContainer}>
+        <FlatList
+          data={favoritos}
+          renderItem={({ item }) => renderItem(item)}
+          keyExtractor={({ id }) => id.toString()}
+        />
+      </View>
+
+      {/* <View style={styles.favoritosContainer}>
 
         <View style={styles.favoritoContainer}>
           <Icon name='briefcase-outline' size={32} />
@@ -88,7 +143,7 @@ export const Favorites = () => {
         </View>
 
         <Text style={{ fontFamily: 'MaliLight', fontSize: 18 }}>Favoritos restantes: 0</Text>
-      </View>
+      </View> */}
 
       <View style={{ height: 32 }} />
 

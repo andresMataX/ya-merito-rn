@@ -2,7 +2,6 @@ import React, { createContext, useContext } from "react";
 import { useReducer } from "react";
 import { Alert } from "react-native";
 import { viajeReducer } from './viajeReducer';
-import { NuevoUsuario, Usuario } from '../../interfaces/Auth/Usuario';
 import { meritoAPI } from '../../api/yaMeritoApi';
 import { AuthContext } from '../authContext/AuthContext';
 import { Travel } from '../../interfaces/Travel/Travel';
