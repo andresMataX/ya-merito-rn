@@ -65,31 +65,42 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }
   }
 
+
   const signUp = async ({ apellido, email, nombre, password }: NuevoUsuario): Promise<Boolean> => {
 
     dispatch({ type: 'loadingState', payload: true });
 
     try {
-      const resp = await fetch(`${URL}/api/usuario`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          apellido,
-          email,
-          nombre,
-          password
-        }),
+
+      await meritoAPI.post('/api/usuario', {
+        email,
+        password,
+        apellido,
+        nombre
       })
 
+      dispatch({ type: 'loadingState', payload: false });
+
+      return true;
+
     } catch (error) {
-      console.log(error);
+      Alert.alert(
+        "Datos incorrectos",
+        "Email / Password no son correctos.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+      return false;
     }
-
-    dispatch({ type: 'loadingState', payload: false });
-
-    return true;
   }
 
   return (

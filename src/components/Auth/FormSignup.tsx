@@ -1,12 +1,26 @@
-import React from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { useForm } from '../../hooks/useForm';
+import { NuevoUsuario } from '../../interfaces/Auth/Usuario';
+import { AuthContext } from '../../context/authContext/AuthContext';
+import { validarEmail } from '../../helpers/validarEmail';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const FormSignup = ({ navigation }: Props) => {
+
+  const { signUp } = useContext(AuthContext);
+
+  const { onChange, apellido, email, nombre, password, confirmPassword, form } = useForm<NuevoUsuario>({
+    apellido: '',
+    email: '',
+    nombre: '',
+    password: '',
+    confirmPassword: ''
+  })
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -26,6 +40,7 @@ export const FormSignup = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu nombre"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'nombre')}
       />
 
 
@@ -35,6 +50,7 @@ export const FormSignup = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu apellido"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'apellido')}
       />
 
 
@@ -45,6 +61,7 @@ export const FormSignup = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu correo"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'email')}
       />
 
 
@@ -56,6 +73,7 @@ export const FormSignup = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu contraseña"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'password')}
       />
 
       <Text style={styles.label}>Confirmar contraseña</Text>
@@ -66,6 +84,7 @@ export const FormSignup = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Confirma tu contraseña"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'confirmPassword')}
       />
 
       <View style={{ height: 32 }} />
@@ -73,7 +92,42 @@ export const FormSignup = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelStack')}
+          onPress={async () => {
+            if (apellido && email && nombre && password && confirmPassword && validarEmail(email)) {
+              if (password === confirmPassword) {
+                const ok = await signUp(form);
+                if (ok) {
+                  navigation.navigate('TravelStack')
+                }
+              } else {
+                Alert.alert(
+                  "Las contraseñas no coinciden",
+                  "Favor de revisar la contraseña.",
+                  [
+                    {
+                      text: "Ok",
+                    }
+                  ],
+                  {
+                    cancelable: true,
+                  }
+                )
+              }
+            } else {
+              Alert.alert(
+                "Datos inválidos",
+                "Favor de revisar los campos",
+                [
+                  {
+                    text: "Ok",
+                  }
+                ],
+                {
+                  cancelable: true,
+                }
+              )
+            }
+          }}
         >
           <Text style={styles.buttonText}>Crear</Text>
           <View style={{ width: 8 }} />
