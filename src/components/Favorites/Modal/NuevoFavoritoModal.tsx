@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FavoritoContext } from '../../../context/favoritoContext/FavoritoContext';
 import { useForm } from '../../../hooks/useForm';
@@ -15,7 +15,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
   const { favoritoState, } = useContext(FavoritoContext);
   const { destinoSeleccionado: favoritoSeleccionado } = favoritoState;
 
-  const { onChange, alias, icono } = useForm<NuevoFavorito>({
+  const { onChange, alias, icono, form } = useForm<NuevoFavorito>({
     alias: '',
     icono: '',
   })
@@ -43,6 +43,8 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
             <TouchableOpacity
               onPress={() => {
+                form.icono = ''
+                form.alias = ''
                 setPressed({
                   train: false,
                   business: false,
@@ -73,6 +75,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
             <TextInput
               style={styles.aliasInput}
               placeholder="Introduce el alias del destino"
+              onChangeText={(value) => onChange(value.trim(), 'alias')}
             />
           </View>
 
@@ -83,6 +86,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
             <View style={styles.iconos}>
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'train'
                   setPressed({
                     train: true,
                     business: false,
@@ -101,6 +105,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'business'
                   setPressed({
                     train: false,
                     business: true,
@@ -119,6 +124,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'cafe'
                   setPressed({
                     train: false,
                     business: false,
@@ -137,6 +143,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'briefcase'
                   setPressed({
                     train: false,
                     business: false,
@@ -155,6 +162,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'home'
                   setPressed({
                     train: false,
                     business: false,
@@ -173,6 +181,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'barbell'
                   setPressed({
                     train: false,
                     business: false,
@@ -191,6 +200,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
               <TouchableOpacity
                 onPress={() => {
+                  form.icono = 'school'
                   setPressed({
                     train: false,
                     business: false,
@@ -213,7 +223,27 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
           <TouchableOpacity
             style={styles.button}
-          // onPress={() => navigation.navigate('TravelMode')}
+            onPress={() => {
+              if (alias && icono) {
+                // const ok = await login(email, password);
+                // if (ok) {
+                //   navigation.navigate('TravelStack')
+                // }
+              } else {
+                Alert.alert(
+                  "Datos incompletos",
+                  "Favor de llenar los campos",
+                  [
+                    {
+                      text: "Ok",
+                    }
+                  ],
+                  {
+                    cancelable: true,
+                  }
+                )
+              }
+            }}
           >
             <Text style={styles.buttonText}>Añadir</Text>
             <View style={{ width: 8 }} />
