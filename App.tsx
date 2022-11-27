@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthStak } from './src/navigation/AuthStack';
+import { MenuLateral } from './src/navigation/MenuLateral';
 
 export default function App() {
 
   return (
     <NavigationContainer>
-      <AuthStak />
+      <MenuLateral />
     </NavigationContainer>
   );
 }

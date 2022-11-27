@@ -4,6 +4,7 @@ import { TravelStart } from '../screens/Travel/TravelStart';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
+import { AuthStak } from './AuthStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,6 +23,7 @@ export const MenuLateral = () => {
 
   return (
     <Drawer.Navigator
+      initialRouteName='AuthStack'
       screenOptions={{
         headerStyle: {
           elevation: 0
@@ -32,6 +34,7 @@ export const MenuLateral = () => {
       }}
       drawerContent={(props) => <MenuInterno {...props} />}
     >
+      <Drawer.Screen name="AuthStak" options={{ headerShown: false }} component={AuthStak} />
       <Drawer.Screen name="TravelStart" options={{ title: '' }} component={TravelStart} />
       <Drawer.Screen name="History" options={{ title: '' }} component={History} />
     </Drawer.Navigator>
@@ -64,7 +67,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             state={state}
             buttonText="Favoritos"
             iconName="star-outline"
-            screenName=''
+            screenName='AuthStak'
           />
           <ButtonOpcion
             navigation={navigation}

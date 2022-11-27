@@ -2,10 +2,9 @@ import React from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { FormLogin } from '../../components/Auth/FormLogin';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParams } from '../../library/types';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-interface Props extends StackScreenProps<RootStackParams, any> { }
+interface Props extends DrawerScreenProps<any, any> { }
 
 export const Login = ({ navigation, route }: Props) => {
 
