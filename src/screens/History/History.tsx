@@ -1,8 +1,34 @@
-import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useContext, useEffect } from 'react';
+import { Text, View, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import { ViajeContext } from '../../context/viajeContext/ViajeContext';
+import { Travel } from '../../interfaces/Travel/Travel';
 
 export const History = () => {
+
+  const { viajeState, getViajes } = useContext(ViajeContext);
+  const { isLoading, viajes } = viajeState;
+
+  useEffect(() => {
+    getViajes()
+  }, [])
+
+
+  const renderItem = ({ direccion }: Travel) => {
+    return (
+      <View style={styles.destino}>
+        <Text style={styles.destinoText}>{direccion}</Text>
+      </View>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
 
   return (
     <View style={styles.mainContainer}>
@@ -13,61 +39,14 @@ export const History = () => {
 
       <View style={{ height: 32 }} />
 
-      <ScrollView style={styles.destinosContainer}>
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
+      <View style={styles.destinosContainer}>
+        <FlatList
+          data={viajes}
+          renderItem={({ item }) => renderItem(item)}
+          keyExtractor={({ id }) => id.toString()}
+        />
+      </View>
 
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-        </View>
-      </ScrollView>
-
-      <View style={{ height: 32 }} />
-
-      {/* <View style={styles.paginacionContainer}>
-        <TouchableOpacity>
-          <Icon name='chevron-back-outline' size={32} />
-        </TouchableOpacity>
-        <View style={styles.paginacion}>
-
-        </View>
-        <TouchableOpacity>
-          <Icon name='chevron-forward-outline' size={32} />
-        </TouchableOpacity>
-      </View> */}
     </View>
   )
 }
@@ -87,7 +66,7 @@ const styles = StyleSheet.create({
   },
   destinosContainer: {
     width: '80%',
-    height: '80%',
+    height: '80%'
   },
   destino: {
     width: '100%',
@@ -100,13 +79,4 @@ const styles = StyleSheet.create({
     fontFamily: 'MaliLight',
     textAlign: 'justify',
   },
-  // paginacionContainer: {
-  //   width: '80%',
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between'
-  // },
-  // paginacion: {
-  //   flex: 1,
-  //   backgroundColor: 'red',
-  // },
 });

@@ -39,7 +39,7 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
 
     try {
 
-      const resp = await meritoAPI.get<Travel[]>(`/api/viaje/usuario/${userID}?page=1`)
+      const resp = await meritoAPI.get<Travel[]>(`/api/viaje/usuario/${userID}`)
 
       dispatch({ type: 'getViajes', payload: resp.data });
 
