@@ -73,7 +73,7 @@ export const FormSignup = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelStart')}
+          onPress={() => navigation.navigate('TravelStack')}
         >
           <Text style={styles.buttonText}>Crear</Text>
           <View style={{ width: 8 }} />

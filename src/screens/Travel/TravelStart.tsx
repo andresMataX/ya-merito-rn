@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInputComponent, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -108,7 +108,7 @@ export const TravelStart = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-        // onPress={() => navigation.navigate('TravelStart')}
+          onPress={() => navigation.navigate('TravelConfirm')}
         >
           <Text style={styles.buttonText}>Iniciar</Text>
           <View style={{ width: 8 }} />

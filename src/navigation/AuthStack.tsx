@@ -6,7 +6,7 @@ import { RootStackParams } from '../library/types';
 
 const { Navigator, Screen } = createStackNavigator<RootStackParams>();
 
-export const AuthStak = () => {
+export const AuthStack = () => {
   return (
     <Navigator initialRouteName="Login" screenOptions={{
       headerShown: false,
