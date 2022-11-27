@@ -4,14 +4,20 @@ import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NuevoFavoritoModal } from '../../components/Favorites/Modal/NuevoFavoritoModal';
 import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { ViajeContext } from '../../context/viajeContext/ViajeContext';
 import { Favorite } from '../../interfaces/Favorite/Favorite';
+import { Travel } from '../../interfaces/Travel/Travel';
 
 export const Favorites = () => {
 
   const { favoritoState, getFavoritos } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
+  const { viajeState, getViajes } = useContext(ViajeContext);
+  const { viajes } = viajeState;
+
   useEffect(() => {
+    getViajes()
     getFavoritos()
   }, [])
 
@@ -22,6 +28,19 @@ export const Favorites = () => {
       <View
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
         <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
+
+  const renderItemDestino = ({ direccion }: Travel) => {
+    return (
+      <View style={styles.destino}>
+        <Text style={styles.destinoText}>{direccion}</Text>
+        <TouchableOpacity
+          onPress={() => setVisibleNuevoFavoritoModal(true)}
+        >
+          <Icon name='star-outline' size={24} />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -70,84 +89,18 @@ export const Favorites = () => {
         />
       </View>
 
-      {/* <View style={styles.favoritosContainer}>
-
-        <View style={styles.favoritoContainer}>
-          <Icon name='briefcase-outline' size={32} />
-
-          <View style={{ width: 8 }} />
-
-          <View style={styles.favoritoAliasContainer}>
-            <Text style={styles.favoritoAlias}>Trabajo</Text>
-
-            <View style={styles.favoritoAccionesContainer}>
-              <TouchableOpacity>
-                <Icon name='create-outline' size={32} />
-              </TouchableOpacity>
-
-              <View style={{ width: 4 }} />
-
-              <TouchableOpacity>
-                <Icon name='trash-outline' size={32} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={{ height: 8 }} />
-
-        <View style={styles.favoritoContainer}>
-          <Icon name='home-outline' size={32} />
-
-          <View style={{ width: 8 }} />
-
-          <View style={styles.favoritoAliasContainer}>
-            <Text style={styles.favoritoAlias}>Casa</Text>
-
-            <View style={styles.favoritoAccionesContainer}>
-              <TouchableOpacity>
-                <Icon name='create-outline' size={32} />
-              </TouchableOpacity>
-
-              <View style={{ width: 4 }} />
-
-              <TouchableOpacity>
-                <Icon name='trash-outline' size={32} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={{ height: 8 }} />
-
-        <View style={styles.favoritoContainer}>
-          <Icon name='school-outline' size={32} />
-
-          <View style={{ width: 8 }} />
-
-          <View style={styles.favoritoAliasContainer}>
-            <Text style={styles.favoritoAlias}>Escuela</Text>
-
-            <View style={styles.favoritoAccionesContainer}>
-              <TouchableOpacity>
-                <Icon name='create-outline' size={32} />
-              </TouchableOpacity>
-
-              <View style={{ width: 4 }} />
-
-              <TouchableOpacity>
-                <Icon name='trash-outline' size={32} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <Text style={{ fontFamily: 'MaliLight', fontSize: 18 }}>Favoritos restantes: 0</Text>
-      </View> */}
-
       <View style={{ height: 32 }} />
 
       <View style={styles.destinosContainer}>
+        <Text style={{ fontFamily: 'MaliRegular', fontSize: 24 }}>Destinos previos</Text>
+        <FlatList
+          data={viajes}
+          renderItem={({ item }) => renderItemDestino(item)}
+          keyExtractor={({ id }) => id.toString()}
+        />
+      </View>
+
+      {/* <View style={styles.destinosContainer}>
         <Text style={{ fontFamily: 'MaliRegular', fontSize: 24 }}>Destinos recientes</Text>
 
         <View style={styles.destino}>
@@ -191,7 +144,7 @@ export const Favorites = () => {
             <Icon name='star-outline' size={24} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
 
       <NuevoFavoritoModal
         visibleNuevoFavoritoModal={visibleNuevoFavoritoModal}
