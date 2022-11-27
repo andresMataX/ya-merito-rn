@@ -6,7 +6,7 @@ import { meritoAPI } from '../../api/yaMeritoApi';
 import { AuthContext } from '../authContext/AuthContext';
 import { Travel } from '../../interfaces/Travel/Travel';
 import { ViajeContext } from "../viajeContext/ViajeContext";
-import { Favorite } from '../../interfaces/Favorite/Favorite';
+import { Favorite, NuevoFavorito } from '../../interfaces/Favorite/Favorite';
 
 export interface FavoritoState {
   isLoading: boolean
@@ -23,6 +23,7 @@ export const favoritoInitialState: FavoritoState = {
 export interface FavoritoContextProps {
   favoritoState: FavoritoState,
   getFavoritos: () => Promise<void>,
+  postFavorito: ({ alias, icono, id_direccion }: NuevoFavorito) => Promise<void>,
   setDestino: (destino: Travel) => void,
 }
 
@@ -68,6 +69,41 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
+  const postFavorito = async ({ alias, icono, id_direccion }: NuevoFavorito) => {
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+
+      const resp = await meritoAPI.post<Favorite>(`/api/favorito/${userID}`, {
+        alias,
+        icono,
+        id_direccion
+      })
+
+      dispatch({ type: 'postFavorito', payload: resp.data });
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    }
+  }
+
+
   const setDestino = (destino: Travel) => {
 
     dispatch({ type: 'setDestino', payload: destino })
@@ -80,7 +116,8 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       value={{
         favoritoState,
         getFavoritos,
-        setDestino: setDestino
+        postFavorito,
+        setDestino,
       }}
     >
       {children}

@@ -5,6 +5,7 @@ import { Favorite } from '../../interfaces/Favorite/Favorite';
 type FavoritoAction =
   | { type: 'loadingState', payload: boolean }
   | { type: 'getFavoritos', payload: Favorite[] }
+  | { type: 'postFavorito', payload: Favorite }
   | { type: 'setDestino', payload: Travel }
 
 export const favoritoReducer = (state: FavoritoState, action: FavoritoAction): FavoritoState => {
@@ -18,6 +19,11 @@ export const favoritoReducer = (state: FavoritoState, action: FavoritoAction): F
       return {
         ...state,
         favoritos: action.payload
+      }
+    case 'postFavorito':
+      return {
+        ...state,
+        favoritos: [...state.favoritos, action.payload]
       }
     case 'setDestino':
       return {

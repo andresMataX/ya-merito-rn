@@ -12,8 +12,8 @@ interface Props {
 
 export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal }: Props) => {
 
-  const { favoritoState, } = useContext(FavoritoContext);
-  const { destinoSeleccionado: favoritoSeleccionado } = favoritoState;
+  const { favoritoState, postFavorito } = useContext(FavoritoContext);
+  const { destinoSeleccionado } = favoritoState;
 
   const { onChange, alias, icono, form } = useForm<NuevoFavorito>({
     alias: '',
@@ -65,7 +65,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
           <View style={styles.destinoContainer}>
             <Text style={styles.destinoTitle}>Destino</Text>
-            <Text style={styles.destinoDireccion}>{favoritoSeleccionado.direccion}</Text>
+            <Text style={styles.destinoDireccion}>{destinoSeleccionado.direccion}</Text>
           </View>
 
           <View style={{ height: 16 }} />
@@ -225,10 +225,13 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
             style={styles.button}
             onPress={() => {
               if (alias && icono) {
-                // const ok = await login(email, password);
-                // if (ok) {
-                //   navigation.navigate('TravelStack')
-                // }
+                postFavorito({
+                  alias,
+                  icono,
+                  id_direccion: destinoSeleccionado.id
+                }).then(() => {
+                  setVisibleNuevoFavoritoModal(false)
+                })
               } else {
                 Alert.alert(
                   "Datos incompletos",
