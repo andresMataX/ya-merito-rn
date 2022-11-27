@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { NuevoFavoritoModal } from '../../components/Favorites/NuevoFavoritoModal';
 
 export const Favorites = () => {
+
+  const [visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal] = useState(false);
 
   return (
     <View style={styles.mainContainer}>
@@ -95,7 +98,9 @@ export const Favorites = () => {
         <View style={styles.destino}>
           <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setVisibleNuevoFavoritoModal(true)}
+          >
             <Icon name='star-outline' size={24} />
           </TouchableOpacity>
         </View>
@@ -133,6 +138,10 @@ export const Favorites = () => {
         </View>
       </View>
 
+      <NuevoFavoritoModal
+        visibleNuevoFavoritoModal={visibleNuevoFavoritoModal}
+        setVisibleNuevoFavoritoModal={setVisibleNuevoFavoritoModal}
+      />
 
     </View>
   )

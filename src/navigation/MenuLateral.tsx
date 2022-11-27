@@ -81,14 +81,6 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             iconName="list-outline"
             screenName='History'
           />
-          <ButtonOpcion
-            navigation={navigation}
-            descriptors={descriptors}
-            state={state}
-            buttonText="Ajustes"
-            iconName="settings-outline"
-            screenName=''
-          />
         </View>
 
         <View style={{ height: 32 }} />

@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 24,
-    fontFamily: 'MaliLight'
+    fontFamily: 'MaliRegular'
   }
 });
