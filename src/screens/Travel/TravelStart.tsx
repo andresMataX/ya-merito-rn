@@ -71,6 +71,41 @@ export const TravelStart = ({ navigation }: Props) => {
           />
         </View>
       </View>
+
+      <View style={{ height: 32 }} />
+
+      <View style={styles.favoritesContainer}>
+
+        <View style={styles.favorito}>
+          <Icon name='briefcase-outline' size={32} />
+          <View style={{ width: 8 }} />
+          <View style={styles.destinoContainer}>
+            <Text style={styles.destinoTitle}>Trabajo</Text>
+            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
+          </View>
+        </View>
+
+        <View style={styles.favorito}>
+          <Icon name='briefcase-outline' size={32} />
+          <View style={{ width: 8 }} />
+          <View style={styles.destinoContainer}>
+            <Text style={styles.destinoTitle}>Trabajo</Text>
+            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
+          </View>
+        </View>
+
+        <View style={styles.favorito}>
+          <Icon name='briefcase-outline' size={32} />
+          <View style={{ width: 8 }} />
+          <View style={styles.destinoContainer}>
+            <Text style={styles.destinoTitle}>Trabajo</Text>
+            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
+          </View>
+        </View>
+
+      </View>
+
+
     </View>
   )
 }
@@ -88,11 +123,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     width: '80%',
-    backgroundColor: 'red'
   },
   label: {
     fontSize: 32,
-    fontFamily: 'MaliBold'
+    fontFamily: 'MaliBold',
+    lineHeight: 40,
   },
   inputContainer: {
     width: '100%',
@@ -110,5 +145,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: '100%',
     color: 'black',
+  },
+  favoritesContainer: {
+    width: '80%',
+  },
+  favorito: {
+    padding: 8,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+  },
+  destinoContainer: {
+    flex: 1,
+    backgroundColor: 'green',
+  },
+  destinoTitle: {
+    fontSize: 20,
+    fontFamily: 'MaliMedium',
+    lineHeight: 28,
+  },
+  destinoDireccion: {
+    fontSize: 12,
+    fontFamily: 'MaliLight',
+    lineHeight: 20,
   }
 });
