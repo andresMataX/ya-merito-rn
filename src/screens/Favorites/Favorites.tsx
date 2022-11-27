@@ -10,7 +10,7 @@ import { Travel } from '../../interfaces/Travel/Travel';
 
 export const Favorites = () => {
 
-  const { favoritoState, getFavoritos } = useContext(FavoritoContext);
+  const { favoritoState, getFavoritos, setFavorito } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
   const { viajeState, getViajes } = useContext(ViajeContext);
@@ -32,12 +32,15 @@ export const Favorites = () => {
     )
   }
 
-  const renderDestino = ({ direccion }: Travel) => {
+  const renderDestino = (data: Travel) => {
     return (
       <View style={styles.destino}>
-        <Text style={styles.destinoText}>{direccion}</Text>
+        <Text style={styles.destinoText}>{data.direccion}</Text>
         <TouchableOpacity
-          onPress={() => setVisibleNuevoFavoritoModal(true)}
+          onPress={() => {
+            setFavorito(data)
+            setVisibleNuevoFavoritoModal(true)
+          }}
         >
           <Icon name='star-outline' size={24} />
         </TouchableOpacity>
@@ -144,7 +147,6 @@ const styles = StyleSheet.create({
   favoritosContainer: {
     width: '80%',
     height: '20%',
-    backgroundColor: 'red'
   },
   favoritoContainer: {
     width: '100%',

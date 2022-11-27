@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { FavoritoContext } from '../../../context/favoritoContext/FavoritoContext';
 
 interface Props {
   visibleNuevoFavoritoModal: boolean
@@ -8,6 +9,9 @@ interface Props {
 }
 
 export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal }: Props) => {
+
+  const { favoritoState, } = useContext(FavoritoContext);
+  const { favoritoSeleccionado } = favoritoState;
 
   return (
     <Modal
@@ -31,7 +35,7 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
           <View style={styles.destinoContainer}>
             <Text style={styles.destinoTitle}>Destino</Text>
-            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
+            <Text style={styles.destinoDireccion}>{favoritoSeleccionado.direccion}</Text>
           </View>
 
           <View style={{ height: 16 }} />
