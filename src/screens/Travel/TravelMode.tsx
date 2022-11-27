@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 48,
-    fontFamily: 'MaliBold'
+    fontFamily: 'MaliBold',
+    lineHeight: 60
   },
   infoContainer: {
     width: '80%',

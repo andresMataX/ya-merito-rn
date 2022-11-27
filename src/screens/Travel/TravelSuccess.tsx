@@ -24,11 +24,11 @@ export const TravelSuccess = ({ navigation }: Props) => {
 
       <Text style={styles.title}>Viaje completado</Text>
 
-      <View style={{ height: 74 }} />
+      <View style={{ height: 104 }} />
 
       <Icon name='checkmark-circle-outline' size={110} color="#36C21F" />
 
-      <View style={{ height: 74 }} />
+      <View style={{ height: 104 }} />
 
       <View style={styles.infoContainer}>
         <View style={styles.destinoContainer}>
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 48,
     fontFamily: 'MaliBold',
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: 60
   },
   infoContainer: {
     width: '80%',
