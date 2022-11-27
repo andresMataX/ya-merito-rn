@@ -32,7 +32,7 @@ export const Favorites = () => {
     )
   }
 
-  const renderItemDestino = ({ direccion }: Travel) => {
+  const renderDestino = ({ direccion }: Travel) => {
     return (
       <View style={styles.destino}>
         <Text style={styles.destinoText}>{direccion}</Text>
@@ -45,10 +45,10 @@ export const Favorites = () => {
     )
   }
 
-  const renderItem = ({ alias }: Favorite) => {
+  const renderFavorito = ({ alias, icono }: Favorite) => {
     return (
       <View style={styles.favoritoContainer}>
-        <Icon name='briefcase-outline' size={32} />
+        <Icon name={`${icono}-outline`} size={32} />
 
         <View style={{ width: 8 }} />
 
@@ -84,7 +84,7 @@ export const Favorites = () => {
       <View style={styles.favoritosContainer}>
         <FlatList
           data={favoritos}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item }) => renderFavorito(item)}
           keyExtractor={({ id }) => id.toString()}
         />
       </View>
@@ -95,56 +95,10 @@ export const Favorites = () => {
         <Text style={{ fontFamily: 'MaliRegular', fontSize: 24 }}>Destinos previos</Text>
         <FlatList
           data={viajes}
-          renderItem={({ item }) => renderItemDestino(item)}
+          renderItem={({ item }) => renderDestino(item)}
           keyExtractor={({ id }) => id.toString()}
         />
       </View>
-
-      {/* <View style={styles.destinosContainer}>
-        <Text style={{ fontFamily: 'MaliRegular', fontSize: 24 }}>Destinos recientes</Text>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-
-          <TouchableOpacity
-            onPress={() => setVisibleNuevoFavoritoModal(true)}
-          >
-            <Icon name='star-outline' size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-
-          <TouchableOpacity>
-            <Icon name='star-outline' size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-
-          <TouchableOpacity>
-            <Icon name='star-outline' size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-
-          <TouchableOpacity>
-            <Icon name='star-outline' size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.destino}>
-          <Text style={styles.destinoText}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-
-          <TouchableOpacity>
-            <Icon name='star-outline' size={24} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
 
       <NuevoFavoritoModal
         visibleNuevoFavoritoModal={visibleNuevoFavoritoModal}
@@ -170,7 +124,7 @@ const styles = StyleSheet.create({
   },
   destinosContainer: {
     width: '80%',
-    height: '80%',
+    height: '60%',
   },
   destino: {
     width: '100%',
@@ -188,7 +142,9 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   favoritosContainer: {
-    width: '80%'
+    width: '80%',
+    height: '20%',
+    backgroundColor: 'red'
   },
   favoritoContainer: {
     width: '100%',
