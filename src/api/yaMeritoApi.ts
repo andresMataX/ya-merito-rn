@@ -1,0 +1,1 @@
+export const URL = 'https://ya-merito-api.onrender.com'
