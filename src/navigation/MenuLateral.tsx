@@ -1,12 +1,15 @@
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { History } from '../screens/History/History';
 import { TravelStart } from '../screens/Travel/TravelStart';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
 import { AuthStack } from './AuthStack';
 import { TravelStack } from './TravelStack';
 import { Favorites } from '../screens/Favorites/Favorites';
+import { CambiarContraModal } from '../components/Drawer/Modal/CambiarContraModal';
+import { useState } from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +49,9 @@ export const MenuLateral = () => {
 }
 
 const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentProps) => {
+
+  const [visibleCambiarContraModal, setVisibleCambiarContraModal] = useState(false)
+
   return (
     <DrawerContentScrollView>
 
@@ -87,14 +93,18 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
         <View>
           <Text style={styles.titleSeccion}>Cuenta</Text>
-          <ButtonOpcion
-            navigation={navigation}
-            descriptors={descriptors}
-            state={state}
-            buttonText="Cambiar contraseña"
-            iconName="lock-open-outline"
-            screenName=''
-          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setVisibleCambiarContraModal(true)}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="lock-open-outline" size={16} />
+              <View style={{ width: 8 }} />
+              <Text style={styles.buttonText}>Cambiar contraseña</Text>
+            </View>
+            <Icon name='chevron-forward-outline' size={20} />
+          </TouchableOpacity>
+
           <ButtonOpcion
             navigation={navigation}
             descriptors={descriptors}
@@ -121,6 +131,11 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
       </View>
 
+      <CambiarContraModal
+        visibleCambiarContraModal={visibleCambiarContraModal}
+        setVisibleCambiarContraModal={setVisibleCambiarContraModal}
+      />
+
     </DrawerContentScrollView>
   )
 }
@@ -138,4 +153,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'MaliExtraLight'
   },
+  button: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    color: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 4
+  },
+  buttonText: {
+    fontSize: 20,
+    fontFamily: 'MaliLight'
+  }
 });

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends DrawerContentComponentProps {
   iconName: string,
+  buttonText: string,
   screenName: string,
-  buttonText: string
 }
 
 export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText }: Props) => {
