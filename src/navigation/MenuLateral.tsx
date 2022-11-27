@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
 import { AuthStack } from './AuthStack';
 import { TravelStack } from './TravelStack';
+import { Favorites } from '../screens/Favorites/Favorites';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,13 +32,15 @@ export const MenuLateral = () => {
         },
         sceneContainerStyle: {
           backgroundColor: 'white'
-        }
+        },
+        title: ''
       }}
       drawerContent={(props) => <MenuInterno {...props} />}
     >
       <Drawer.Screen name="AuthStack" options={{ headerShown: false }} component={AuthStack} />
-      <Drawer.Screen name="TravelStack" options={{ title: '' }} component={TravelStack} />
-      <Drawer.Screen name="History" options={{ title: '' }} component={History} />
+      <Drawer.Screen name="TravelStack" component={TravelStack} />
+      <Drawer.Screen name="History" component={History} />
+      <Drawer.Screen name="Favorites" component={Favorites} />
     </Drawer.Navigator>
   );
 }
@@ -68,7 +71,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             state={state}
             buttonText="Favoritos"
             iconName="star-outline"
-            screenName=''
+            screenName='Favorites'
           />
           <ButtonOpcion
             navigation={navigation}
