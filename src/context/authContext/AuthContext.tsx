@@ -8,10 +8,12 @@ import { meritoAPI } from '../../api/yaMeritoApi';
 // Defining how the state looks like
 export interface AuthState {
   isLoading: boolean
+  userID: number
 }
 
 export const authInitialState: AuthState = {
-  isLoading: false
+  isLoading: false,
+  userID: 0
 }
 
 // What is the context like and what does it expose
@@ -36,10 +38,12 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
     try {
 
-      await meritoAPI.post('/api/auth/login', {
+      const resp = await meritoAPI.post<Usuario>('/api/auth/login', {
         email,
         password
       })
+
+      dispatch({ type: 'setID', payload: resp.data.id });
 
       dispatch({ type: 'loadingState', payload: false });
 
@@ -72,12 +76,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
     try {
 
-      await meritoAPI.post('/api/usuario', {
+      const resp = await meritoAPI.post<Usuario>('/api/usuario', {
         email,
         password,
         apellido,
         nombre
       })
+
+      dispatch({ type: 'setID', payload: resp.data.id });
 
       dispatch({ type: 'loadingState', payload: false });
 

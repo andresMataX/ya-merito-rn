@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 import { Maps } from '../../components/Travel/Maps';
+import { ViajeContext } from '../../context/viajeContext/ViajeContext';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelStart = ({ navigation }: Props) => {
+
+  const { getViajes } = useContext(ViajeContext);
 
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
@@ -15,6 +18,11 @@ export const TravelStart = ({ navigation }: Props) => {
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
     MaliMedium: require('../../../assets/fonts/Mali-Medium.ttf')
   });
+
+  useEffect(() => {
+    getViajes()
+  }, [])
+
 
   // Botón para menú hamburguesa
   useEffect(() => {

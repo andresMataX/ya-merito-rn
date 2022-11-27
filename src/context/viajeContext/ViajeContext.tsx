@@ -1,21 +1,26 @@
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
 import { useReducer } from "react";
 import { Alert } from "react-native";
 import { viajeReducer } from './viajeReducer';
 import { NuevoUsuario, Usuario } from '../../interfaces/Auth/Usuario';
 import { meritoAPI } from '../../api/yaMeritoApi';
+import { AuthContext } from '../authContext/AuthContext';
+import { Travel } from '../../interfaces/Travel/Travel';
 
 export interface ViajeState {
   isLoading: boolean
+  viajes: Travel[]
 }
 
 export const viajeInitialState: ViajeState = {
-  isLoading: false
+  isLoading: false,
+  viajes: []
 }
 
 export interface ViajeContextProps {
   viajeState: ViajeState,
-
+  postViaje: (userId: string, direccion: string) => Promise<Boolean>,
+  getViajes: () => Promise<void>,
 }
 
 export const ViajeContext = createContext({} as ViajeContextProps);
@@ -24,26 +29,26 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
 
   const [viajeState, dispatch] = useReducer(viajeReducer, viajeInitialState);
 
+  const { authState } = useContext(AuthContext);
+  const { userID } = authState;
 
-  const login = async (email: string, password: string): Promise<Boolean> => {
+
+  const getViajes = async () => {
 
     dispatch({ type: 'loadingState', payload: true });
 
     try {
 
-      await meritoAPI.post('/api/auth/login', {
-        email,
-        password
-      })
+      const resp = await meritoAPI.get<Travel[]>(`/api/viaje/usuario/${userID}?page=1`)
+
+      dispatch({ type: 'getViajes', payload: resp.data });
 
       dispatch({ type: 'loadingState', payload: false });
 
-      return true;
-
     } catch (error) {
       Alert.alert(
-        "Datos incorrectos",
-        "Email / Password no son correctos.",
+        "Error",
+        "Favor de intentar de nuevo.",
         [
           {
             text: "OK",
@@ -55,23 +60,19 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
       )
 
       dispatch({ type: 'loadingState', payload: false });
-
-      return false;
     }
+
   }
 
 
-  const signUp = async ({ apellido, email, nombre, password }: NuevoUsuario): Promise<Boolean> => {
+  const postViaje = async (userId: string, direccion: string): Promise<Boolean> => {
 
     dispatch({ type: 'loadingState', payload: true });
 
     try {
 
-      await meritoAPI.post('/api/usuario', {
-        email,
-        password,
-        apellido,
-        nombre
+      await meritoAPI.post(`/api/viaje/${userId}`, {
+        direccion
       })
 
       dispatch({ type: 'loadingState', payload: false });
@@ -80,8 +81,8 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
 
     } catch (error) {
       Alert.alert(
-        "Datos incorrectos",
-        "Email / Password no son correctos.",
+        "Error",
+        "Favor de intentar de nuevo.",
         [
           {
             text: "OK",
@@ -102,6 +103,8 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
     <ViajeContext.Provider
       value={{
         viajeState,
+        postViaje,
+        getViajes
       }}
     >
       {children}
