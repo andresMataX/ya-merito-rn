@@ -11,19 +11,19 @@ import { Favorite } from '../../interfaces/Favorite/Favorite';
 export interface FavoritoState {
   isLoading: boolean
   favoritos: Favorite[]
-  favoritoSeleccionado: Travel
+  destinoSeleccionado: Travel
 }
 
 export const favoritoInitialState: FavoritoState = {
   isLoading: false,
   favoritos: [],
-  favoritoSeleccionado: {} as Travel
+  destinoSeleccionado: {} as Travel
 }
 
 export interface FavoritoContextProps {
   favoritoState: FavoritoState,
   getFavoritos: () => Promise<void>,
-  setFavorito: (favorito: Travel) => void,
+  setDestino: (destino: Travel) => void,
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);
@@ -68,9 +68,9 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
-  const setFavorito = (favorito: Travel) => {
+  const setDestino = (destino: Travel) => {
 
-    dispatch({ type: 'setFavorito', payload: favorito })
+    dispatch({ type: 'setDestino', payload: destino })
 
   }
 
@@ -80,7 +80,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       value={{
         favoritoState,
         getFavoritos,
-        setFavorito
+        setDestino: setDestino
       }}
     >
       {children}

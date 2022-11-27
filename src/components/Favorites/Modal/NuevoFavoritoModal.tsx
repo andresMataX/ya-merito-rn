@@ -11,7 +11,7 @@ interface Props {
 export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal }: Props) => {
 
   const { favoritoState, } = useContext(FavoritoContext);
-  const { favoritoSeleccionado } = favoritoState;
+  const { destinoSeleccionado: favoritoSeleccionado } = favoritoState;
 
   return (
     <Modal

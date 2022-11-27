@@ -10,7 +10,7 @@ import { Travel } from '../../interfaces/Travel/Travel';
 
 export const Favorites = () => {
 
-  const { favoritoState, getFavoritos, setFavorito } = useContext(FavoritoContext);
+  const { favoritoState, getFavoritos, setDestino: setFavorito } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
   const { viajeState, getViajes } = useContext(ViajeContext);
