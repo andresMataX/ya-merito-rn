@@ -1,18 +1,14 @@
 import { AuthState } from './AuthContext';
 
 type AuthAction =
-  | { type: 'login', payload: string }
-  | { type: 'sigIn', payload: string };
+  | { type: 'loadingState', payload: boolean };
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'login':
+    case 'loadingState':
       return {
         ...state,
-      }
-    case 'sigIn':
-      return {
-        ...state,
+        isLoading: action.payload
       }
     default:
       return state;

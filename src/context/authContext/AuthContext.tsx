@@ -6,10 +6,11 @@ import { NuevoUsuario } from '../../interfaces/Auth/Usuario';
 
 // Defining how the state looks like
 export interface AuthState {
+  isLoading: boolean
 }
 
 export const authInitialState: AuthState = {
-
+  isLoading: false
 }
 
 // What is the context like and what does it expose
@@ -27,29 +28,30 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   const [authState, dispatch] = useReducer(authReducer, authInitialState);
 
+
   const login = async (email: string, password: string): Promise<Boolean> => {
+
+    dispatch({ type: 'loadingState', payload: true });
 
     try {
       const resp = await fetch(`${URL}/api/auth/login`, {
-        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
+        method: 'POST',
         body: JSON.stringify({
           email,
           password
         }),
       })
 
+      console.log(resp);
+
       if (!resp.ok) {
         Alert.alert(
           "Datos incorrectos",
           "Email / Password no son correctos.",
           [
-            {
-              text: "Cancel",
-              style: "cancel"
-            },
             {
               text: "OK",
             }
@@ -66,10 +68,14 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       console.log(error);
     }
 
+    dispatch({ type: 'loadingState', payload: false });
+
     return true;
   }
 
   const signUp = async ({ apellido, email, nombre, password }: NuevoUsuario): Promise<Boolean> => {
+
+    dispatch({ type: 'loadingState', payload: true });
 
     try {
       const resp = await fetch(`${URL}/api/usuario`, {
@@ -88,6 +94,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     } catch (error) {
       console.log(error);
     }
+
+    dispatch({ type: 'loadingState', payload: false });
 
     return true;
   }

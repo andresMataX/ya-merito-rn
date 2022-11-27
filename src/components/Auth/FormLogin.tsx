@@ -1,16 +1,25 @@
-import React from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { AuthContext } from '../../context/authContext/AuthContext';
+import { useForm } from '../../hooks/useForm';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const FormLogin = ({ navigation }: Props) => {
 
+  const { login } = useContext(AuthContext);
+
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliSemiBold: require('../../../assets/fonts/Mali-SemiBold.ttf')
+  });
+
+  const { onChange, email, password } = useForm({
+    email: '',
+    password: ''
   });
 
   if (!fontsLoaded) {
@@ -27,6 +36,7 @@ export const FormLogin = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu correo"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'email')}
       />
 
       <View style={{ height: 16 }} />
@@ -39,6 +49,7 @@ export const FormLogin = ({ navigation }: Props) => {
         style={styles.input}
         placeholder="Introduce tu contraseña"
         placeholderTextColor="5F5F5F"
+        onChangeText={(value) => onChange(value, 'password')}
       />
 
       <View style={{ height: 64 }} />
@@ -46,7 +57,27 @@ export const FormLogin = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelStack')}
+          onPress={async () => {
+            if (email && password) {
+              const ok = await login(email, password);
+              if (ok) {
+                navigation.navigate('TravelStack')
+              }
+            } else {
+              Alert.alert(
+                "Datos incompletos",
+                "Favor de llenar los campos",
+                [
+                  {
+                    text: "Ok",
+                  }
+                ],
+                {
+                  cancelable: true,
+                }
+              )
+            }
+          }}
         >
           <Text style={styles.buttonText}>Ingresar</Text>
           <View style={{ width: 8 }} />
