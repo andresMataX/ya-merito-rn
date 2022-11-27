@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -50,6 +51,26 @@ export const TravelConfirm = ({ }: Props) => {
 
       <View style={{ height: 80 }} />
 
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+        // onPress={() => navigation.navigate('TravelConfirm')}
+        >
+          <Text style={styles.buttonText}>Cancelar</Text>
+          <View style={{ width: 8 }} />
+          <Icon name="close-outline" size={28} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+        // onPress={() => navigation.navigate('TravelConfirm')}
+        >
+          <Text style={styles.buttonText}>Aceptar</Text>
+          <View style={{ width: 8 }} />
+          <Icon name="checkmark-outline" size={28} />
+        </TouchableOpacity>
+      </View>
+
     </View>
   )
 }
@@ -73,10 +94,27 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     borderColor: 'black',
-    // flex: 1,
     fontSize: 32,
     fontFamily: 'MaliLight',
     lineHeight: 32,
     color: 'black'
-  }
+  },
+  buttonContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    color: 'black',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 24,
+    fontFamily: 'MaliLight'
+  },
 });
