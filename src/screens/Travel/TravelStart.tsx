@@ -12,8 +12,6 @@ export const TravelStart = ({ navigation }: Props) => {
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
-    // MaliRegular: require('../../../assets/fonts/Mali-Regular.ttf'),
-    // MaliSemiBold: require('../../../assets/fonts/Mali-SemiBold.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
     MaliMedium: require('../../../assets/fonts/Mali-Medium.ttf')
   });
@@ -72,7 +70,7 @@ export const TravelStart = ({ navigation }: Props) => {
         </View>
       </View>
 
-      <View style={{ height: 32 }} />
+      <View style={{ height: 24 }} />
 
       <View style={styles.favoritesContainer}>
 
@@ -105,6 +103,19 @@ export const TravelStart = ({ navigation }: Props) => {
 
       </View>
 
+      <View style={{ height: 24 }} />
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+        // onPress={() => navigation.navigate('TravelStart')}
+        >
+          <Text style={styles.buttonText}>Iniciar</Text>
+          <View style={{ width: 8 }} />
+          <Icon name="navigate-circle-outline" size={28} />
+        </TouchableOpacity>
+      </View>
+
 
     </View>
   )
@@ -116,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   mapContainer: {
-    height: '48%',
+    height: '40%',
     width: '80%',
     borderColor: 'black',
     borderWidth: 2,
@@ -125,9 +136,9 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   label: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: 'MaliBold',
-    lineHeight: 40,
+    lineHeight: 30,
   },
   inputContainer: {
     width: '100%',
@@ -155,11 +166,11 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'blue',
+    borderColor: 'black',
+    borderBottomWidth: 1,
   },
   destinoContainer: {
     flex: 1,
-    backgroundColor: 'green',
   },
   destinoTitle: {
     fontSize: 20,
@@ -170,5 +181,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'MaliLight',
     lineHeight: 20,
+  },
+  buttonContainer: {
+    width: '80%',
+    alignItems: 'center',
+  },
+  button: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    color: 'black',
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  buttonText: {
+    fontSize: 24,
+    fontFamily: 'MaliLight'
   }
 });
