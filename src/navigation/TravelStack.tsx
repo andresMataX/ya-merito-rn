@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TravelStart } from '../screens/Travel/TravelStart';
 import { TravelConfirm } from '../screens/Travel/TravelConfirm';
+import { TravelMode } from '../screens/Travel/TravelMode';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -18,6 +19,7 @@ export const TravelStack = () => {
     }}>
       <Screen name="TravelStart" component={TravelStart} />
       <Screen name="TravelConfirm" component={TravelConfirm} />
+      <Screen name="TravelMode" component={TravelMode} />
     </Navigator>
   );
 }

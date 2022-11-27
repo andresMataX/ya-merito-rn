@@ -7,13 +7,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
-export const TravelConfirm = ({ }: Props) => {
+export const TravelConfirm = ({ navigation }: Props) => {
 
   const [fontsLoaded] = useFonts({
-    MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
-    MaliMedium: require('../../../assets/fonts/Mali-Medium.ttf')
   });
 
   if (!fontsLoaded) {
@@ -54,7 +52,7 @@ export const TravelConfirm = ({ }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-        // onPress={() => navigation.navigate('TravelConfirm')}
+          onPress={() => navigation.goBack()}
         >
           <Text style={styles.buttonText}>Cancelar</Text>
           <View style={{ width: 8 }} />
@@ -63,7 +61,7 @@ export const TravelConfirm = ({ }: Props) => {
 
         <TouchableOpacity
           style={styles.button}
-        // onPress={() => navigation.navigate('TravelConfirm')}
+          onPress={() => navigation.navigate('TravelMode')}
         >
           <Text style={styles.buttonText}>Aceptar</Text>
           <View style={{ width: 8 }} />
