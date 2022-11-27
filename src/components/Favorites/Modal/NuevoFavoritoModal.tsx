@@ -1,7 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FavoritoContext } from '../../../context/favoritoContext/FavoritoContext';
+import { useForm } from '../../../hooks/useForm';
+import { NuevoFavorito } from '../../../interfaces/Favorite/Favorite';
 
 interface Props {
   visibleNuevoFavoritoModal: boolean
@@ -12,6 +14,21 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
 
   const { favoritoState, } = useContext(FavoritoContext);
   const { destinoSeleccionado: favoritoSeleccionado } = favoritoState;
+
+  const { onChange, alias, icono } = useForm<NuevoFavorito>({
+    alias: '',
+    icono: '',
+  })
+
+  const [pressed, setPressed] = useState({
+    train: false,
+    business: false,
+    cafe: false,
+    briefcase: false,
+    home: false,
+    barbell: false,
+    school: false,
+  })
 
   return (
     <Modal
@@ -25,7 +42,18 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
             <Text style={styles.headerText}>Agregar favorito</Text>
 
             <TouchableOpacity
-              onPress={() => setVisibleNuevoFavoritoModal(false)}
+              onPress={() => {
+                setPressed({
+                  train: false,
+                  business: false,
+                  cafe: false,
+                  briefcase: false,
+                  home: false,
+                  barbell: false,
+                  school: false
+                })
+                setVisibleNuevoFavoritoModal(false)
+              }}
             >
               <Icon name='close-outline' size={32} />
             </TouchableOpacity>
@@ -53,32 +81,130 @@ export const NuevoFavoritoModal = ({ visibleNuevoFavoritoModal, setVisibleNuevoF
           <View style={styles.iconosContainer}>
             <Text style={styles.destinoTitle}>Íconos</Text>
             <View style={styles.iconos}>
-              <TouchableOpacity>
-                <Icon name='train-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: true,
+                    business: false,
+                    cafe: false,
+                    briefcase: false,
+                    home: false,
+                    barbell: false,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='train-outline' size={32} style={{
+                  borderBottomWidth: (pressed.train) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='business-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: true,
+                    cafe: false,
+                    briefcase: false,
+                    home: false,
+                    barbell: false,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='business-outline' size={32} style={{
+                  borderBottomWidth: (pressed.business) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='cafe-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: false,
+                    cafe: true,
+                    briefcase: false,
+                    home: false,
+                    barbell: false,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='cafe-outline' size={32} style={{
+                  borderBottomWidth: (pressed.cafe) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='briefcase-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: false,
+                    cafe: false,
+                    briefcase: true,
+                    home: false,
+                    barbell: false,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='briefcase-outline' size={32} style={{
+                  borderBottomWidth: (pressed.briefcase) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='home-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: false,
+                    cafe: false,
+                    briefcase: false,
+                    home: true,
+                    barbell: false,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='home-outline' size={32} style={{
+                  borderBottomWidth: (pressed.home) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='barbell-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: false,
+                    cafe: false,
+                    briefcase: false,
+                    home: false,
+                    barbell: true,
+                    school: false,
+                  })
+                }}
+              >
+                <Icon name='barbell-outline' size={32} style={{
+                  borderBottomWidth: (pressed.barbell) ? 2 : 0
+                }} />
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <Icon name='school-outline' size={32} />
+              <TouchableOpacity
+                onPress={() => {
+                  setPressed({
+                    train: false,
+                    business: false,
+                    cafe: false,
+                    briefcase: false,
+                    home: false,
+                    barbell: false,
+                    school: true,
+                  })
+                }}
+              >
+                <Icon name='school-outline' size={32} style={{
+                  borderBottomWidth: (pressed.school) ? 2 : 0
+                }} />
               </TouchableOpacity>
             </View>
           </View>

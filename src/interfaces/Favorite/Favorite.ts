@@ -7,3 +7,9 @@ export interface Favorite {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface NuevoFavorito {
+  alias: string;
+  icono: string;
+  id_direccion?: number;
+}
