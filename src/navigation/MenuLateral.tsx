@@ -113,14 +113,18 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             iconName="log-out-outline"
             screenName='AuthStack'
           />
-          <ButtonOpcion
-            navigation={navigation}
-            descriptors={descriptors}
-            state={state}
-            buttonText="Eliminar cuenta"
-            iconName="trash-outline"
-            screenName=''
-          />
+
+          <TouchableOpacity
+            style={styles.button}
+          // onPress={() => setVisibleCambiarContraModal(true)}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="trash-outline" size={16} color="#EE1D1D" />
+              <View style={{ width: 8 }} />
+              <Text style={{ ...styles.buttonText, color: '#EE1D1D' }}>Eliminar cuenta</Text>
+            </View>
+            <Icon name='chevron-forward-outline' size={20} color="#EE1D1D" />
+          </TouchableOpacity>
         </View>
 
         <View style={{ height: 32 }} />
