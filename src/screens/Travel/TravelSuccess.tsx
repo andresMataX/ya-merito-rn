@@ -6,7 +6,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
-export const TravelMode = ({ navigation }: Props) => {
+export const TravelSuccess = ({ navigation }: Props) => {
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -22,13 +22,13 @@ export const TravelMode = ({ navigation }: Props) => {
   return (
     <View style={styles.mainContainer}>
 
-      <Text style={styles.title}>Viaje iniciado</Text>
+      <Text style={styles.title}>Viaje completado</Text>
 
-      <View style={{ height: 104 }} />
+      <View style={{ height: 74 }} />
 
-      <Icon name='bus-outline' size={110} />
+      <Icon name='checkmark-circle-outline' size={110} color="#36C21F" />
 
-      <View style={{ height: 104 }} />
+      <View style={{ height: 74 }} />
 
       <View style={styles.infoContainer}>
         <View style={styles.destinoContainer}>
@@ -38,9 +38,12 @@ export const TravelMode = ({ navigation }: Props) => {
 
         <View style={{ height: 8 }} />
 
-        <View style={styles.destinoContainer}>
-          <Text style={styles.distanciaText}>Distancia con el destino: 6200 m</Text>
-          <Text style={styles.rangoText}>Rango seleccionado: 1500 m</Text>
+        <View style={styles.favoritoContainer}>
+          <Text style={styles.rangoText}>Marcar destino como favorito: </Text>
+          <View style={{ width: 8 }} />
+          <TouchableOpacity>
+            <Icon name='star-outline' size={16} />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -48,10 +51,9 @@ export const TravelMode = ({ navigation }: Props) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          // onPress={() => navigation.goBack()}
-          onPress={() => navigation.navigate('TravelSuccess')}
+          onPress={() => navigation.navigate('TravelStart')}
         >
-          <Icon name='close-outline' size={75} />
+          <Icon name='arrow-back-outline' size={75} />
         </TouchableOpacity>
       </View>
 
@@ -66,13 +68,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 48,
-    fontFamily: 'MaliBold'
+    fontFamily: 'MaliBold',
+    textAlign: 'center'
   },
   infoContainer: {
     width: '80%',
   },
   destinoContainer: {
     width: '100%',
+  },
+  favoritoContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   destinoTitle: {
     fontFamily: 'MaliBold',
