@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { useFonts } from 'expo-font';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParams } from '../../library/types';
 import { FormSignup } from '../../components/Auth/FormSignup';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-interface Props extends StackScreenProps<RootStackParams, any> { }
+interface Props extends DrawerScreenProps<any, any> { }
 
 export const SignUp = ({ navigation, route }: Props) => {
 

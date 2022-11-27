@@ -2,10 +2,9 @@ import React from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParams } from '../../library/types';
+import { DrawerScreenProps } from '@react-navigation/drawer';
 
-interface Props extends StackScreenProps<RootStackParams, any> { }
+interface Props extends DrawerScreenProps<any, any> { }
 
 export const FormSignup = ({ navigation }: Props) => {
 
@@ -74,6 +73,7 @@ export const FormSignup = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
+          onPress={() => navigation.navigate('TravelStart')}
         >
           <Text style={styles.buttonText}>Crear</Text>
           <View style={{ width: 8 }} />

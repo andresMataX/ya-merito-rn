@@ -67,7 +67,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             state={state}
             buttonText="Favoritos"
             iconName="star-outline"
-            screenName='AuthStak'
+            screenName=''
           />
           <ButtonOpcion
             navigation={navigation}
@@ -105,7 +105,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             state={state}
             buttonText="Cerrar sesión"
             iconName="log-out-outline"
-            screenName=''
+            screenName='AuthStak'
           />
           <ButtonOpcion
             navigation={navigation}
