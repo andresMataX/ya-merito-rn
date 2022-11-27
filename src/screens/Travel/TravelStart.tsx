@@ -4,6 +4,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { useFonts } from 'expo-font';
+import { Maps } from '../../components/Travel/Maps';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -39,21 +40,7 @@ export const TravelStart = ({ navigation }: Props) => {
   return (
     <View style={styles.mainContainer}>
 
-      <View style={styles.mapContainer}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        />
-      </View>
+      <Maps />
 
       <View style={{ height: 16 }} />
 
