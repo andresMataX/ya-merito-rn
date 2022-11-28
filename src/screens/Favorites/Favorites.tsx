@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { EditarFavoritoModal } from '../../components/Favorites/Modal/EditarFavoritoModal';
@@ -83,7 +83,22 @@ export const Favorites = () => {
 
             <TouchableOpacity
               onPress={() => {
-                deleteFavorito(data.id)
+                Alert.alert(
+                  "Confirmación",
+                  "¿Está seguro de eliminar la cuenta?",
+                  [
+                    {
+                      text: "Cancelar",
+                      style: "cancel"
+                    },
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        deleteFavorito(data.id)
+                      }
+                    }
+                  ],
+                )
               }}
             >
               <Icon name='trash-outline' size={32} />
