@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, Text, View, Button } from "react-native"
-import * as TaskManager from "expo-task-manager"
-import * as Location from "expo-location"
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+import * as TaskManager from "expo-task-manager";
+import * as Location from "expo-location";
+
+interface Locations {
+  coords: Location.LocationObjectCoords,
+  timestamp: Date
+}
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME"
 let foregroundSubscription: { remove: any } | null = null
@@ -14,9 +19,9 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   }
   if (data) {
     // Extract location coordinates from data
-    const { latitude, longitude } = data as Location.LocationObjectCoords
-    if (latitude && longitude) {
-      console.log("Location in background", { latitude }, { longitude })
+    const { coords } = data as Locations
+    if (coords) {
+      console.log("Location in background", coords)
     } else {
       console.log("Mal tipado", { data })
     }
@@ -24,6 +29,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
 })
 
 export const Prueba = () => {
+
   // Define position state: {latitude: number, longitude: number}
   const [position, setPosition] = useState<Location.LocationObjectCoords>()
 
@@ -76,7 +82,7 @@ export const Prueba = () => {
     }
 
     // Make sure the task is defined otherwise do not start tracking
-    const isTaskDefined = await TaskManager.isTaskDefined(LOCATION_TASK_NAME)
+    const isTaskDefined = TaskManager.isTaskDefined(LOCATION_TASK_NAME)
     if (!isTaskDefined) {
       console.log("Task is not defined")
       return
