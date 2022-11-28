@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { EditarFavoritoModal } from '../../components/Favorites/Modal/EditarFavoritoModal';
 import { NuevoFavoritoModal } from '../../components/Favorites/Modal/NuevoFavoritoModal';
 import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
 import { ViajeContext } from '../../context/viajeContext/ViajeContext';
@@ -10,7 +11,13 @@ import { Travel } from '../../interfaces/Travel/Travel';
 
 export const Favorites = () => {
 
-  const { favoritoState, getFavoritos, setDestino, setFavorito, deleteFavorito } = useContext(FavoritoContext);
+  const { favoritoState,
+    getFavoritos,
+    setDestino,
+    setFavorito,
+    deleteFavorito,
+    getDireccion
+  } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
   const { viajeState, getViajes } = useContext(ViajeContext);
@@ -22,6 +29,7 @@ export const Favorites = () => {
   }, [])
 
   const [visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal] = useState(false);
+  const [visibleEditarFavoritoModal, setVisibleEditarFavoritoModal] = useState(false);
 
   if (isLoading || isLoadingViajes) {
     return (
@@ -64,6 +72,8 @@ export const Favorites = () => {
             <TouchableOpacity
               onPress={() => {
                 setFavorito(data)
+                getDireccion(data.id_direccion)
+                setVisibleEditarFavoritoModal(true)
               }}
             >
               <Icon name='create-outline' size={32} />
@@ -114,6 +124,11 @@ export const Favorites = () => {
       <NuevoFavoritoModal
         visibleNuevoFavoritoModal={visibleNuevoFavoritoModal}
         setVisibleNuevoFavoritoModal={setVisibleNuevoFavoritoModal}
+      />
+
+      <EditarFavoritoModal
+        visibleEditarFavoritoModal={visibleEditarFavoritoModal}
+        setVisibleEditarFavoritoModal={setVisibleEditarFavoritoModal}
       />
 
     </View>

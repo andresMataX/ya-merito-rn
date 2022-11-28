@@ -10,6 +10,7 @@ import { Favorite, NuevoFavorito } from '../../interfaces/Favorite/Favorite';
 export interface FavoritoState {
   isLoading: boolean
   favoritos: Favorite[]
+  direccion: string
   destinoSeleccionado: Travel
   favoritoSeleccionado: Favorite
 }
@@ -18,7 +19,8 @@ export const favoritoInitialState: FavoritoState = {
   isLoading: false,
   favoritos: [],
   destinoSeleccionado: {} as Travel,
-  favoritoSeleccionado: {} as Favorite
+  favoritoSeleccionado: {} as Favorite,
+  direccion: '',
 }
 
 export interface FavoritoContextProps {
@@ -28,6 +30,7 @@ export interface FavoritoContextProps {
   setDestino: (destino: Travel) => void,
   setFavorito: (favorito: Favorite) => void,
   deleteFavorito: (favoritoID: number) => Promise<void>,
+  getDireccion: (direccionID: number) => Promise<void>
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);
@@ -53,6 +56,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       dispatch({ type: 'loadingState', payload: false });
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Error",
         "Favor de intentar de nuevo.",
@@ -89,6 +93,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       dispatch({ type: 'loadingState', payload: false });
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Error",
         "Favor de intentar de nuevo.",
@@ -121,6 +126,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       dispatch({ type: 'loadingState', payload: false });
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Error",
         "Favor de intentar de nuevo.",
@@ -153,6 +159,37 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
 
   }
 
+  const getDireccion = async (direccionID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+      const resp = await meritoAPI.get<Travel>(`/api/viaje/${direccionID}`)
+
+      dispatch({ type: 'setDireccion', payload: resp.data.direccion });
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+    }
+
+  }
+
   return (
     <FavoritoContext.Provider
       value={{
@@ -161,7 +198,8 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
         postFavorito,
         setDestino,
         setFavorito,
-        deleteFavorito
+        deleteFavorito,
+        getDireccion,
       }}
     >
       {children}

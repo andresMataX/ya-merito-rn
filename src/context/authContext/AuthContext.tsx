@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       return true;
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Datos incorrectos",
         "Email / Password no son correctos.",
@@ -90,6 +91,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       return true;
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Datos incorrectos",
         "Email / Password no son correctos.",

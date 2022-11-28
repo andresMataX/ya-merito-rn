@@ -45,6 +45,7 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
       dispatch({ type: 'loadingState', payload: false });
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Error",
         "Favor de intentar de nuevo.",
@@ -79,6 +80,7 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
       return true;
 
     } catch (error) {
+      console.log(error)
       Alert.alert(
         "Error",
         "Favor de intentar de nuevo.",
