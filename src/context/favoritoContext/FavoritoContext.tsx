@@ -31,7 +31,7 @@ export interface FavoritoContextProps {
   setFavorito: (favorito: Favorite) => void,
   deleteFavorito: (favoritoID: number) => Promise<void>,
   getDireccion: (direccionID: number) => Promise<void>,
-  putFavorito: ({ alias, icono }: NuevoFavorito, favoritoID: number) => Promise<void>
+  putFavorito: ({ alias, icono }: NuevoFavorito, favoritoID: number) => Promise<void>,
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);

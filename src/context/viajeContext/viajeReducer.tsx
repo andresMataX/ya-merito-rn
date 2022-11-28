@@ -5,6 +5,7 @@ type ViajeAction =
   | { type: 'loadingState', payload: boolean }
   | { type: 'getViajes', payload: Travel[] }
   | { type: 'postViajes', payload: Travel }
+  | { type: 'logout' }
 
 export const viajeReducer = (state: ViajeState, action: ViajeAction): ViajeState => {
   switch (action.type) {
@@ -17,6 +18,11 @@ export const viajeReducer = (state: ViajeState, action: ViajeAction): ViajeState
       return {
         ...state,
         viajes: action.payload
+      }
+    case 'logout':
+      return {
+        isLoading: false,
+        viajes: []
       }
     default:
       return state;

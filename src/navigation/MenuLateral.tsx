@@ -8,8 +8,11 @@ import { AuthStack } from './AuthStack';
 import { TravelStack } from './TravelStack';
 import { Favorites } from '../screens/Favorites/Favorites';
 import { CambiarContraModal } from '../components/Drawer/Modal/CambiarContraModal';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AuthContext, AuthState } from '../context/authContext/AuthContext';
+import { FavoritoContext, FavoritoState } from '../context/favoritoContext/FavoritoContext';
+import { ViajeContext, ViajeState } from '../context/viajeContext/ViajeContext';
 
 const Drawer = createDrawerNavigator();
 
@@ -52,6 +55,8 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
   const [visibleCambiarContraModal, setVisibleCambiarContraModal] = useState(false)
 
+  const { logout } = useContext(AuthContext);
+
   return (
     <DrawerContentScrollView>
 
@@ -70,6 +75,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             buttonText="Viajar"
             iconName="map-outline"
             screenName='TravelStart'
+            favorito
           />
           <ButtonOpcion
             navigation={navigation}
@@ -78,6 +84,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             buttonText="Favoritos"
             iconName="star-outline"
             screenName='Favorites'
+            favorito
           />
           <ButtonOpcion
             navigation={navigation}
@@ -86,6 +93,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             buttonText="Historial de viajes"
             iconName="list-outline"
             screenName='History'
+            viajes
           />
         </View>
 
@@ -116,7 +124,9 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
           <TouchableOpacity
             style={styles.button}
-          // onPress={() => setVisibleCambiarContraModal(true)}
+            onPress={() => {
+              logout()
+            }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Icon name="trash-outline" size={16} color="#EE1D1D" />

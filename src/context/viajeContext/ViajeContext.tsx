@@ -100,12 +100,13 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
     }
   }
 
+
   return (
     <ViajeContext.Provider
       value={{
         viajeState,
         postViaje,
-        getViajes
+        getViajes,
       }}
     >
       {children}

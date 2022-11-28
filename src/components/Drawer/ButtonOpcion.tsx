@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { ViajeContext } from '../../context/viajeContext/ViajeContext';
 
 interface Props extends DrawerContentComponentProps {
   iconName: string,
   buttonText: string,
   screenName: string,
+  favorito?: boolean
+  viajes?: boolean
 }
 
-export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText }: Props) => {
+export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText, favorito = false, viajes = false }: Props) => {
+
+  const { getFavoritos } = useContext(FavoritoContext);
+  const { getViajes } = useContext(ViajeContext);
 
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate(screenName)}
+      onPress={() => {
+        if (favorito) {
+          getFavoritos()
+        }
+
+        if (viajes) {
+          getViajes()
+        }
+
+        navigation.navigate(screenName)
+
+      }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Icon name={iconName} size={16} />

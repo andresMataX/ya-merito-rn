@@ -9,6 +9,7 @@ type FavoritoAction =
   | { type: 'postFavorito', payload: Favorite }
   | { type: 'setDestino', payload: Travel }
   | { type: 'setFavorito', payload: Favorite }
+  | { type: 'logout' }
 
 export const favoritoReducer = (state: FavoritoState, action: FavoritoAction): FavoritoState => {
   switch (action.type) {
@@ -41,6 +42,14 @@ export const favoritoReducer = (state: FavoritoState, action: FavoritoAction): F
       return {
         ...state,
         favoritoSeleccionado: action.payload
+      }
+    case 'logout':
+      return {
+        ...state,
+        destinoSeleccionado: {} as Travel,
+        direccion: '',
+        favoritos: [],
+        favoritoSeleccionado: {} as Favorite,
       }
     default:
       return state;

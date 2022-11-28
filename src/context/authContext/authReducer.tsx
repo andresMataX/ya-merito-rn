@@ -2,7 +2,8 @@ import { AuthState } from './AuthContext';
 
 type AuthAction =
   | { type: 'loadingState', payload: boolean }
-  | { type: 'setID', payload: number };
+  | { type: 'setID', payload: number }
+  | { type: 'logout' }
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
@@ -15,6 +16,11 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
       return {
         ...state,
         userID: action.payload
+      }
+    case 'logout':
+      return {
+        ...state,
+        userID: 0
       }
     default:
       return state;

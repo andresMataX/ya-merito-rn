@@ -22,6 +22,7 @@ export interface AuthContextProps {
   login: (email: string, password: string) => Promise<Boolean>,
   signUp: ({ apellido, email, nombre, password }: NuevoUsuario) => Promise<Boolean>,
   putUsuario: ({ password }: ActualizarUsuario, usuarioID: number) => Promise<void>,
+  logout: () => void
 }
 
 // Create the context
@@ -146,6 +147,13 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
   }
 
+
+  const logout = () => {
+
+    dispatch({ type: 'logout' })
+
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -153,6 +161,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         login,
         signUp,
         putUsuario,
+        logout
       }}
     >
       {children}
