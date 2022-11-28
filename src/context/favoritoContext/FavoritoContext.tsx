@@ -30,7 +30,8 @@ export interface FavoritoContextProps {
   setDestino: (destino: Travel) => void,
   setFavorito: (favorito: Favorite) => void,
   deleteFavorito: (favoritoID: number) => Promise<void>,
-  getDireccion: (direccionID: number) => Promise<void>
+  getDireccion: (direccionID: number) => Promise<void>,
+  putFavorito: ({ alias, icono }: NuevoFavorito, favoritoID: number) => Promise<void>
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);
@@ -52,6 +53,38 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
       const resp = await meritoAPI.get<Favorite[]>(`/api/favorito/usuario/${userID}`)
 
       dispatch({ type: 'getFavoritos', payload: resp.data });
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+    }
+
+  }
+
+
+  const getDireccion = async (direccionID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+      const resp = await meritoAPI.get<Travel>(`/api/viaje/${direccionID}`)
+
+      dispatch({ type: 'setDireccion', payload: resp.data.direccion });
 
       dispatch({ type: 'loadingState', payload: false });
 
@@ -113,6 +146,43 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
+  const putFavorito = async ({ alias = '', icono = '' }: NuevoFavorito, favoritoID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+
+      await meritoAPI.put<Favorite>(`/api/favorito/${favoritoID}`, {
+        alias,
+        icono,
+      })
+
+      getFavoritos()
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    }
+
+  }
+
+
   const deleteFavorito = async (favoritoID: number) => {
 
     dispatch({ type: 'loadingState', payload: true });
@@ -159,37 +229,6 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
 
   }
 
-  const getDireccion = async (direccionID: number) => {
-
-    dispatch({ type: 'loadingState', payload: true });
-
-    try {
-      const resp = await meritoAPI.get<Travel>(`/api/viaje/${direccionID}`)
-
-      dispatch({ type: 'setDireccion', payload: resp.data.direccion });
-
-      dispatch({ type: 'loadingState', payload: false });
-
-    } catch (error) {
-      console.log(error)
-      Alert.alert(
-        "Error",
-        "Favor de intentar de nuevo.",
-        [
-          {
-            text: "OK",
-          }
-        ],
-        {
-          cancelable: true,
-        }
-      )
-
-      dispatch({ type: 'loadingState', payload: false });
-    }
-
-  }
-
   return (
     <FavoritoContext.Provider
       value={{
@@ -200,6 +239,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
         setFavorito,
         deleteFavorito,
         getDireccion,
+        putFavorito,
       }}
     >
       {children}

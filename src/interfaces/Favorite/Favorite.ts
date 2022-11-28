@@ -9,7 +9,7 @@ export interface Favorite {
 }
 
 export interface NuevoFavorito {
-  alias: string;
-  icono: string;
+  alias?: string;
+  icono?: string;
   id_direccion?: number;
 }

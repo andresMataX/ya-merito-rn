@@ -12,13 +12,10 @@ interface Props {
 
 export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEditarFavoritoModal }: Props) => {
 
-  const { favoritoState, postFavorito } = useContext(FavoritoContext);
+  const { favoritoState, putFavorito } = useContext(FavoritoContext);
   const { favoritoSeleccionado, direccion } = favoritoState;
 
-  const { onChange, alias, icono, form } = useForm<NuevoFavorito>({
-    alias: '',
-    icono: '',
-  })
+  const { onChange, alias, icono, form } = useForm<NuevoFavorito>({})
 
   const [pressed, setPressed] = useState({
     train: false,
@@ -44,8 +41,8 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
 
             <TouchableOpacity
               onPress={() => {
-                form.icono = ''
-                form.alias = ''
+                form.alias = undefined
+                form.icono = undefined
                 setPressed({
                   train: false,
                   business: false,
@@ -75,7 +72,7 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
             <Text style={styles.destinoTitle}>Alias</Text>
             <TextInput
               style={styles.aliasInput}
-              placeholder="Introduce el alias del destino"
+              placeholder={favoritoSeleccionado.alias}
               onChangeText={(value) => onChange(value.trim(), 'alias')}
             />
           </View>
@@ -226,17 +223,27 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
             style={styles.button}
             onPress={() => {
               if (alias && icono) {
-                postFavorito({
-                  alias,
-                  icono,
-                  id_direccion: favoritoSeleccionado.id_direccion
-                }).then(() => {
+                putFavorito({ alias, icono }, favoritoSeleccionado.id).then(() => {
+                  form.alias = undefined
+                  form.icono = undefined
+                  setVisibleEditarFavoritoModal(false)
+                })
+              } else if (icono) {
+                putFavorito({ icono }, favoritoSeleccionado.id).then(() => {
+                  form.alias = undefined
+                  form.icono = undefined
+                  setVisibleEditarFavoritoModal(false)
+                })
+              } else if (alias) {
+                putFavorito({ alias }, favoritoSeleccionado.id).then(() => {
+                  form.alias = undefined
+                  form.icono = undefined
                   setVisibleEditarFavoritoModal(false)
                 })
               } else {
                 Alert.alert(
-                  "Datos incompletos",
-                  "Favor de llenar los campos",
+                  "Datos idénticos",
+                  "Favor de hacer modificaiones",
                   [
                     {
                       text: "Ok",
@@ -249,9 +256,9 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
               }
             }}
           >
-            <Text style={styles.buttonText}>Añadir</Text>
+            <Text style={styles.buttonText}>Editar</Text>
             <View style={{ width: 8 }} />
-            <Icon name="add-outline" size={28} />
+            <Icon name="create-outline" size={28} />
           </TouchableOpacity>
 
         </View>
