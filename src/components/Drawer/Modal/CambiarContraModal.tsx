@@ -1,8 +1,9 @@
-import React from 'react';
-import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import React, { useContext } from 'react';
+import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useForm } from '../../../hooks/useForm';
 import { ActualizarUsuario } from '../../../interfaces/Auth/Usuario';
+import { AuthContext } from '../../../context/authContext/AuthContext';
 
 interface Props {
   visibleCambiarContraModal: boolean
@@ -11,10 +12,22 @@ interface Props {
 
 export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambiarContraModal }: Props) => {
 
+  const { authState, putUsuario } = useContext(AuthContext);
+  const { isLoading, userID } = authState;
+
   const { onChange, password, confirmPassword, form } = useForm<ActualizarUsuario>({
     password: '',
     confirmPassword: ''
   })
+
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
 
   return (
     <Modal
@@ -28,7 +41,11 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
             <Text style={styles.headerText}>Cambiar contraseña</Text>
 
             <TouchableOpacity
-              onPress={() => setVisibleCambiarContraModal(false)}
+              onPress={() => {
+                form.password = ''
+                form.confirmPassword = undefined
+                setVisibleCambiarContraModal(false)
+              }}
             >
               <Icon name='close-outline' size={32} />
             </TouchableOpacity>
@@ -41,6 +58,9 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
             <TextInput
               style={styles.aliasInput}
               placeholder="Introduce tu nueva contraseña"
+              autoComplete='off'
+              autoCapitalize='none'
+              secureTextEntry={true}
               onChangeText={(value) => onChange(value.trim(), 'password')}
             />
           </View>
@@ -51,6 +71,9 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
             <Text style={styles.destinoTitle}>Confirmar contraseña</Text>
             <TextInput
               style={styles.aliasInput}
+              autoComplete='off'
+              autoCapitalize='none'
+              secureTextEntry={true}
               placeholder="Confirma tu nueva contraseña"
               onChangeText={(value) => onChange(value.trim(), 'confirmPassword')}
             />
@@ -64,7 +87,11 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
               if (password && confirmPassword) {
                 if (password === confirmPassword) {
                   if (password.length > 3) {
-
+                    putUsuario({ password }, userID).then(() => {
+                      form.password = ''
+                      form.confirmPassword = undefined
+                      setVisibleCambiarContraModal(false)
+                    })
                   } else {
                     Alert.alert(
                       "Contraseña inválida",

@@ -119,7 +119,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
 
     try {
 
-      await meritoAPI.put<Usuario>(`/api/favorito/${usuarioID}`, {
+      await meritoAPI.put<Usuario>(`/api/usuario/${usuarioID}`, {
         password,
       })
 
