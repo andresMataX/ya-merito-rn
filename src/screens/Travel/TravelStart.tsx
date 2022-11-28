@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, Platform } from 'react-native';
-import * as Location from 'expo-location';
+import React, { useEffect } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
@@ -9,27 +8,6 @@ import { Maps } from '../../components/Travel/Maps';
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelStart = ({ navigation }: Props) => {
-
-  const [location, setLocation] = useState<Location.LocationObjectCoords>();
-  const [errorMsg, setErrorMsg] = useState("");
-
-  useEffect(() => {
-    (async () => {
-
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      // let location = await Location.getCurrentPositionAsync({});
-      let location = await Location.watchPositionAsync({
-        timeInterval: 1000
-      }, ({ coords, timestamp }) => {
-        setLocation(coords)
-      })
-    })();
-  }, [location]);
 
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
@@ -54,15 +32,37 @@ export const TravelStart = ({ navigation }: Props) => {
     })
   }, [])
 
+
+  // const [location, setLocation] = useState<Location.LocationObjectCoords>();
+  // const [errorMsg, setErrorMsg] = useState("");
+
+  // useEffect(() => {
+  //   (async () => {
+
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
+
+  //     // let location = await Location.getCurrentPositionAsync({});
+  //     let location = await Location.watchPositionAsync({
+  //       timeInterval: 1000
+  //     }, ({ coords, timestamp }) => {
+  //       setLocation(coords)
+  //     })
+  //   })();
+  // }, []);
+
+  // let text = 'Waiting..';
+  // if (errorMsg) {
+  //   text = errorMsg;
+  // } else if (location) {
+  //   text = JSON.stringify(location);
+  // }
+
   if (!fontsLoaded) {
     return null;
-  }
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
   }
 
   return (
@@ -87,7 +87,7 @@ export const TravelStart = ({ navigation }: Props) => {
 
       <View style={{ height: 24 }} />
 
-      <Text style={styles.label}>{text}</Text>
+      {/* <Text style={styles.label}>{text}</Text> */}
 
       {/* <View style={styles.favoritesContainer}>
 
@@ -125,7 +125,7 @@ export const TravelStart = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelConfirm')}
+          onPress={() => navigation.navigate('Prueba')}
         >
           <Text style={styles.buttonText}>Iniciar</Text>
           <View style={{ width: 8 }} />

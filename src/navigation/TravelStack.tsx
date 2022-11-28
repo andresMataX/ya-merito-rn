@@ -4,6 +4,7 @@ import { TravelStart } from '../screens/Travel/TravelStart';
 import { TravelConfirm } from '../screens/Travel/TravelConfirm';
 import { TravelMode } from '../screens/Travel/TravelMode';
 import { TravelSuccess } from '../screens/Travel/TravelSuccess';
+import { Prueba } from '../screens/Travel/Prueba';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -19,6 +20,7 @@ export const TravelStack = () => {
       },
     }}>
       <Screen name="TravelStart" component={TravelStart} />
+      <Screen name="Prueba" component={Prueba} />
       <Screen name="TravelConfirm" component={TravelConfirm} />
       <Screen name="TravelMode" component={TravelMode} />
       <Screen name="TravelSuccess" component={TravelSuccess} />
