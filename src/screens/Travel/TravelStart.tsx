@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
@@ -32,35 +32,6 @@ export const TravelStart = ({ navigation }: Props) => {
     })
   }, [])
 
-
-  // const [location, setLocation] = useState<Location.LocationObjectCoords>();
-  // const [errorMsg, setErrorMsg] = useState("");
-
-  // useEffect(() => {
-  //   (async () => {
-
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       setErrorMsg('Permission to access location was denied');
-  //       return;
-  //     }
-
-  //     // let location = await Location.getCurrentPositionAsync({});
-  //     let location = await Location.watchPositionAsync({
-  //       timeInterval: 1000
-  //     }, ({ coords, timestamp }) => {
-  //       setLocation(coords)
-  //     })
-  //   })();
-  // }, []);
-
-  // let text = 'Waiting..';
-  // if (errorMsg) {
-  //   text = errorMsg;
-  // } else if (location) {
-  //   text = JSON.stringify(location);
-  // }
-
   if (!fontsLoaded) {
     return null;
   }
@@ -87,9 +58,7 @@ export const TravelStart = ({ navigation }: Props) => {
 
       <View style={{ height: 24 }} />
 
-      {/* <Text style={styles.label}>{text}</Text> */}
-
-      {/* <View style={styles.favoritesContainer}>
+      <ScrollView style={styles.favoritesContainer}>
 
         <View style={styles.favorito}>
           <Icon name='briefcase-outline' size={32} />
@@ -118,20 +87,31 @@ export const TravelStart = ({ navigation }: Props) => {
           </View>
         </View>
 
-      </View> */}
+        <View style={styles.favorito}>
+          <Icon name='briefcase-outline' size={32} />
+          <View style={{ width: 8 }} />
+          <View style={styles.destinoContainer}>
+            <Text style={styles.destinoTitle}>Trabajo</Text>
+            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
+          </View>
+        </View>
+
+      </ScrollView>
 
       <View style={{ height: 8 }} />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Prueba')}
+          onPress={() => navigation.navigate('TravelMode')}
         >
           <Text style={styles.buttonText}>Iniciar</Text>
           <View style={{ width: 8 }} />
           <Icon name="navigate-circle-outline" size={28} />
         </TouchableOpacity>
       </View>
+
+      <View style={{ height: 32 }} />
 
     </View>
   )
