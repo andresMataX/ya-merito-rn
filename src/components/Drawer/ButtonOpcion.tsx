@@ -29,9 +29,7 @@ export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText, fav
         if (viajes) {
           getViajes()
         }
-
         navigation.navigate(screenName)
-
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>

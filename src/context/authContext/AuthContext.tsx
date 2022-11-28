@@ -22,7 +22,8 @@ export interface AuthContextProps {
   login: (email: string, password: string) => Promise<Boolean>,
   signUp: ({ apellido, email, nombre, password }: NuevoUsuario) => Promise<Boolean>,
   putUsuario: ({ password }: ActualizarUsuario, usuarioID: number) => Promise<void>,
-  logout: () => void
+  logout: () => void,
+  deleteUsuario: (usuarioID: number) => Promise<void>
 }
 
 // Create the context
@@ -148,6 +149,38 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
+  const deleteUsuario = async (usuarioID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+
+      await meritoAPI.delete<Usuario>(`/api/usuario/${usuarioID}`)
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    }
+
+  }
+
+
   const logout = () => {
 
     dispatch({ type: 'logout' })
@@ -161,7 +194,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
         login,
         signUp,
         putUsuario,
-        logout
+        logout,
+        deleteUsuario
       }}
     >
       {children}

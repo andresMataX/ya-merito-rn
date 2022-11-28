@@ -55,7 +55,8 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
   const [visibleCambiarContraModal, setVisibleCambiarContraModal] = useState(false)
 
-  const { logout } = useContext(AuthContext);
+  const { authState, deleteUsuario } = useContext(AuthContext);
+  const { userID } = authState;
 
   return (
     <DrawerContentScrollView>
@@ -124,8 +125,10 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              logout()
+            onPress={async () => {
+              deleteUsuario(userID).then(() => {
+                navigation.navigate('AuthStack')
+              })
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
