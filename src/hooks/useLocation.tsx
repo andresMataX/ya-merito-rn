@@ -19,12 +19,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   }
   if (data) {
     // Extract location coordinates from data
-    const { coords } = data as Locations
-    if (coords) {
-      console.log("Location in background", coords)
-    } else {
-      console.log("Mal tipado", { data })
-    }
+    // const { coords } = data as Locations
+    console.log("Localización en el fondo", { data })
   }
 })
 
@@ -47,7 +43,7 @@ export const useLocation = () => {
     // Check if foreground permission is granted
     const { granted } = await Location.getForegroundPermissionsAsync()
     if (!granted) {
-      console.log("location tracking denied")
+      console.log("Seguimiento de localización denegado")
       return
     }
 
@@ -77,14 +73,14 @@ export const useLocation = () => {
     // Don't track position if permission is not granted
     const { granted } = await Location.getBackgroundPermissionsAsync()
     if (!granted) {
-      console.log("location tracking denied")
+      console.log("Seguimiento de localización denegado")
       return
     }
 
     // Make sure the task is defined otherwise do not start tracking
     const isTaskDefined = TaskManager.isTaskDefined(LOCATION_TASK_NAME)
     if (!isTaskDefined) {
-      console.log("Task is not defined")
+      console.log("La tarea no está definida")
       return
     }
 
@@ -93,7 +89,7 @@ export const useLocation = () => {
       LOCATION_TASK_NAME
     )
     if (hasStarted) {
-      console.log("Already started")
+      console.log("Ya iniciado")
       return
     }
 
@@ -103,8 +99,8 @@ export const useLocation = () => {
       // Make sure to enable this notification if you want to consistently track in the background
       showsBackgroundLocationIndicator: true,
       foregroundService: {
-        notificationTitle: "Location",
-        notificationBody: "Location tracking in background",
+        notificationTitle: "Localización",
+        notificationBody: "Seguimiento de localización en el fondo",
         notificationColor: "#fff",
       },
     })
@@ -117,7 +113,7 @@ export const useLocation = () => {
     )
     if (hasStarted) {
       await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME)
-      console.log("Location tacking stopped")
+      console.log("Seguimiento de localización parado")
     }
   }
 

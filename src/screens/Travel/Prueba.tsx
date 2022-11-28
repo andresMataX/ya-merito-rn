@@ -8,30 +8,30 @@ export const Prueba = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Longitude: {position?.longitude}</Text>
-      <Text>Latitude: {position?.latitude}</Text>
+      <Text>Longitud: {position?.longitude}</Text>
+      <Text>Latitud: {position?.latitude}</Text>
       <View style={styles.separator} />
       <Button
         onPress={startForegroundUpdate}
-        title="Start in foreground"
+        title="Iniciar en primer plano"
         color="green"
       />
       <View style={styles.separator} />
       <Button
         onPress={stopForegroundUpdate}
-        title="Stop in foreground"
+        title="Parar en primer plano"
         color="red"
       />
       <View style={styles.separator} />
       <Button
         onPress={startBackgroundUpdate}
-        title="Start in background"
+        title="Iniciar en el fondo"
         color="green"
       />
       <View style={styles.separator} />
       <Button
         onPress={stopBackgroundUpdate}
-        title="Stop in foreground"
+        title="Parar en el fondo"
         color="red"
       />
     </View>
