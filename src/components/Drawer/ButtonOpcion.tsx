@@ -24,8 +24,8 @@ export const ButtonOpcion = ({ navigation, iconName, screenName, buttonText, fav
       onPress={() => {
         if (favorito) {
           getFavoritos()
+          getViajes()
         }
-
         if (viajes) {
           getViajes()
         }

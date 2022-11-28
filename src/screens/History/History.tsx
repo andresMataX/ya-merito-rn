@@ -1,17 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, View, StyleSheet, ScrollView, FlatList, ActivityIndicator } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { ViajeContext } from '../../context/viajeContext/ViajeContext';
 import { Travel } from '../../interfaces/Travel/Travel';
 
 export const History = () => {
 
-  const { viajeState, getViajes } = useContext(ViajeContext);
+  const { viajeState } = useContext(ViajeContext);
   const { isLoading, viajes } = viajeState;
-
-  useEffect(() => {
-    getViajes()
-  }, [])
-
 
   const renderItem = ({ direccion }: Travel) => {
     return (

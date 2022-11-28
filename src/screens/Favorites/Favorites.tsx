@@ -12,7 +12,6 @@ import { Travel } from '../../interfaces/Travel/Travel';
 export const Favorites = () => {
 
   const { favoritoState,
-    getFavoritos,
     setDestino,
     setFavorito,
     deleteFavorito,
@@ -20,13 +19,8 @@ export const Favorites = () => {
   } = useContext(FavoritoContext);
   const { isLoading, favoritos } = favoritoState;
 
-  const { viajeState, getViajes } = useContext(ViajeContext);
+  const { viajeState } = useContext(ViajeContext);
   const { isLoading: isLoadingViajes, viajes } = viajeState;
-
-  useEffect(() => {
-    getViajes()
-    getFavoritos()
-  }, [])
 
   const [visibleNuevoFavoritoModal, setVisibleNuevoFavoritoModal] = useState(false);
   const [visibleEditarFavoritoModal, setVisibleEditarFavoritoModal] = useState(false);

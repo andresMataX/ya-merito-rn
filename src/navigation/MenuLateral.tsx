@@ -76,7 +76,7 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
             buttonText="Viajar"
             iconName="map-outline"
             screenName='TravelStart'
-            favorito
+            viajes
           />
           <ButtonOpcion
             navigation={navigation}
