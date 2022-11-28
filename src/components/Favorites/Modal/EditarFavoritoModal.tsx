@@ -223,21 +223,24 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
             style={styles.button}
             onPress={() => {
               if (alias && icono) {
+                console.log(form);
                 putFavorito({ alias, icono }, favoritoSeleccionado.id).then(() => {
-                  form.alias = undefined
-                  form.icono = undefined
+                  form.alias = ''
+                  form.icono = ''
                   setVisibleEditarFavoritoModal(false)
                 })
               } else if (icono) {
+                console.log(form);
                 putFavorito({ icono }, favoritoSeleccionado.id).then(() => {
-                  form.alias = undefined
-                  form.icono = undefined
+                  form.alias = ''
+                  form.icono = ''
                   setVisibleEditarFavoritoModal(false)
                 })
               } else if (alias) {
+                console.log(form);
                 putFavorito({ alias }, favoritoSeleccionado.id).then(() => {
-                  form.alias = undefined
-                  form.icono = undefined
+                  form.alias = ''
+                  form.icono = ''
                   setVisibleEditarFavoritoModal(false)
                 })
               } else {

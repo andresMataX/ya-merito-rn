@@ -146,7 +146,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
-  const putFavorito = async ({ alias = '', icono = '' }: NuevoFavorito, favoritoID: number) => {
+  const putFavorito = async ({ alias = undefined, icono = undefined }: NuevoFavorito, favoritoID: number) => {
 
     dispatch({ type: 'loadingState', payload: true });
 
