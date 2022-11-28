@@ -1,7 +1,7 @@
 import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { History } from '../screens/History/History';
 import { TravelStart } from '../screens/Travel/TravelStart';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { useFonts } from 'expo-font';
 import { ButtonOpcion } from '../components/Drawer/ButtonOpcion';
 import { AuthStack } from './AuthStack';
@@ -126,9 +126,24 @@ const MenuInterno = ({ navigation, descriptors, state }: DrawerContentComponentP
           <TouchableOpacity
             style={styles.button}
             onPress={async () => {
-              deleteUsuario(userID).then(() => {
-                navigation.navigate('AuthStack')
-              })
+              Alert.alert(
+                "Confirmación",
+                "¿Está seguro de eliminar la cuenta?",
+                [
+                  {
+                    text: "Cancelar",
+                    style: "cancel"
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      deleteUsuario(userID).then(() => {
+                        navigation.navigate('AuthStack')
+                      })
+                    }
+                  }
+                ],
+              )
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
