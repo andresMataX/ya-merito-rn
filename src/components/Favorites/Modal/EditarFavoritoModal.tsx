@@ -223,7 +223,6 @@ export const EditarFavoritoModal = ({ visibleEditarFavoritoModal, setVisibleEdit
             style={styles.button}
             onPress={() => {
               if (alias && icono) {
-                console.log(form);
                 putFavorito({ alias, icono }, favoritoSeleccionado.id).then(() => {
                   form.alias = ''
                   form.icono = ''

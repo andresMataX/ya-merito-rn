@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 import { useReducer } from "react";
 import { Alert } from "react-native";
 import { authReducer } from './authReducer';
-import { NuevoUsuario, Usuario } from '../../interfaces/Auth/Usuario';
+import { NuevoUsuario, Usuario, ActualizarUsuario } from '../../interfaces/Auth/Usuario';
 import { meritoAPI } from '../../api/yaMeritoApi';
 
 // Defining how the state looks like
@@ -21,6 +21,7 @@ export interface AuthContextProps {
   authState: AuthState,
   login: (email: string, password: string) => Promise<Boolean>,
   signUp: ({ apellido, email, nombre, password }: NuevoUsuario) => Promise<Boolean>,
+  putUsuario: ({ password }: ActualizarUsuario, usuarioID: number) => Promise<void>,
 }
 
 // Create the context
@@ -111,12 +112,47 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
     }
   }
 
+
+  const putUsuario = async ({ password }: ActualizarUsuario, usuarioID: number) => {
+
+    dispatch({ type: 'loadingState', payload: true });
+
+    try {
+
+      await meritoAPI.put<Usuario>(`/api/favorito/${usuarioID}`, {
+        password,
+      })
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    } catch (error) {
+      console.log(error)
+      Alert.alert(
+        "Error",
+        "Favor de intentar de nuevo.",
+        [
+          {
+            text: "OK",
+          }
+        ],
+        {
+          cancelable: true,
+        }
+      )
+
+      dispatch({ type: 'loadingState', payload: false });
+
+    }
+
+  }
+
   return (
     <AuthContext.Provider
       value={{
         authState,
         login,
         signUp,
+        putUsuario,
       }}
     >
       {children}

@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useForm } from '../../../hooks/useForm';
+import { ActualizarUsuario } from '../../../interfaces/Auth/Usuario';
 
 interface Props {
   visibleCambiarContraModal: boolean
@@ -8,6 +10,11 @@ interface Props {
 }
 
 export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambiarContraModal }: Props) => {
+
+  const { onChange, password, confirmPassword, form } = useForm<ActualizarUsuario>({
+    password: '',
+    confirmPassword: ''
+  })
 
   return (
     <Modal
@@ -34,6 +41,7 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
             <TextInput
               style={styles.aliasInput}
               placeholder="Introduce tu nueva contraseña"
+              onChangeText={(value) => onChange(value.trim(), 'password')}
             />
           </View>
 
@@ -44,6 +52,7 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
             <TextInput
               style={styles.aliasInput}
               placeholder="Confirma tu nueva contraseña"
+              onChangeText={(value) => onChange(value.trim(), 'confirmPassword')}
             />
           </View>
 
@@ -51,6 +60,54 @@ export const CambiarContraModal = ({ visibleCambiarContraModal, setVisibleCambia
 
           <TouchableOpacity
             style={styles.button}
+            onPress={() => {
+              if (password && confirmPassword) {
+                if (password === confirmPassword) {
+                  if (password.length > 3) {
+
+                  } else {
+                    Alert.alert(
+                      "Contraseña inválida",
+                      "Debe tener más de 3 letras",
+                      [
+                        {
+                          text: "Ok",
+                        }
+                      ],
+                      {
+                        cancelable: true,
+                      }
+                    )
+                  }
+                } else {
+                  Alert.alert(
+                    "Contraseña inválida",
+                    "Las contraseñas no coinciden",
+                    [
+                      {
+                        text: "Ok",
+                      }
+                    ],
+                    {
+                      cancelable: true,
+                    }
+                  )
+                }
+              } else {
+                Alert.alert(
+                  "Datos incompletos",
+                  "Favor de llenar todos los campos",
+                  [
+                    {
+                      text: "Ok",
+                    }
+                  ],
+                  {
+                    cancelable: true,
+                  }
+                )
+              }
+            }}
           >
             <Text style={styles.buttonText}>Confirmar</Text>
             <View style={{ width: 8 }} />

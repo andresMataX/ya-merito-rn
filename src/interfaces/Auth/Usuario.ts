@@ -17,3 +17,7 @@ export interface Usuario {
   updatedAt: Date;
 }
 
+export interface ActualizarUsuario {
+  password: string
+  confirmPassword?: string
+}
