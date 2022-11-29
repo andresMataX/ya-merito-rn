@@ -40,13 +40,13 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
 
         <View style={{ height: 16 }} />
 
-        {/* <View style={styles.favoritoContainer}>
+        <View style={styles.favoritoContainer}>
           <Text style={styles.rangoText}>Marcar destino como favorito: </Text>
           <View style={{ width: 8 }} />
           <TouchableOpacity>
             <Icon name='star-outline' size={16} />
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
 
       <View style={{ height: 48 }} />
