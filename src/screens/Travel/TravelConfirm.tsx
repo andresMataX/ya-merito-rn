@@ -103,7 +103,8 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
           onPress={() => {
             if (range > 100 && range < 10000) {
               navigation.navigate('TravelMode', {
-                range
+                range,
+                coordsMarker: coords
               })
             } else {
               Alert.alert(

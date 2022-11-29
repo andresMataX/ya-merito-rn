@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { useLocation } from '../../hooks/useLocation';
+import { medirDistancia } from '../../helpers/medirDistancia';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelMode = ({ navigation, route }: Props) => {
 
-  const { range } = route.params!
+  const { range, coordsMarker } = route.params!
+
+  const { position, startForegroundUpdate } = useLocation();
+
+  useEffect(() => {
+    startForegroundUpdate()
+  }, [])
+
+  const [distanciaActual, setDistanciaActual] = useState(0.0)
+
+  useEffect(() => {
+    setDistanciaActual(
+      medirDistancia({
+        lat1: position?.latitude,
+        lon1: position?.longitude,
+        lat2: coordsMarker.lat,
+        lon2: coordsMarker.lng
+      })
+    )
+  }, [position])
+
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -41,7 +63,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
         <View style={{ height: 8 }} />
 
         <View style={styles.destinoContainer}>
-          <Text style={styles.distanciaText}>Distancia con el destino: 6200 m</Text>
+          <Text style={styles.distanciaText}>Distancia con el destino: {distanciaActual.toFixed(2)} m</Text>
           <Text style={styles.rangoText}>Rango seleccionado: {range} m</Text>
         </View>
       </View>
