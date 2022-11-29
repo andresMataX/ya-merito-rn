@@ -18,7 +18,7 @@ export const viajeInitialState: ViajeState = {
 
 export interface ViajeContextProps {
   viajeState: ViajeState,
-  postViaje: (userId: string, direccion: string) => Promise<Boolean>,
+  postViaje: (userId: number, direccion: string) => Promise<Boolean>,
   getViajes: () => Promise<void>,
 }
 
@@ -65,7 +65,7 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
   }
 
 
-  const postViaje = async (userId: string, direccion: string): Promise<Boolean> => {
+  const postViaje = async (userId: number, direccion: string): Promise<Boolean> => {
 
     dispatch({ type: 'loadingState', payload: true });
 

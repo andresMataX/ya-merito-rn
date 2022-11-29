@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
+import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { ViajeContext } from '../../context/viajeContext/ViajeContext';
+import { AuthContext } from '../../context/authContext/AuthContext';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelSuccess = ({ navigation, route }: Props) => {
 
-  const { direccion } = route.params!
+  const { direccion, direccionID } = route.params!
+
+  const { authState } = useContext(AuthContext);
+  const { userID } = authState;
+
+  const { favoritoState, getDireccion } = useContext(FavoritoContext);
+  const { direccion: direccionBD } = favoritoState;
+
+  const { postViaje } = useContext(ViajeContext);
+
+  useEffect(() => {
+    if (direccionID) {
+      getDireccion(direccionID).then(() => {
+        postViaje(userID, direccionBD)
+      })
+    }
+  }, [])
+
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),

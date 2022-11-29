@@ -136,7 +136,7 @@ export const TravelStart = ({ navigation }: Props) => {
           onPress={() => {
             if (direccion) {
               setDireccion()
-              navigation.navigate('TravelConfirm', { direccion })
+              navigation.navigate('TravelConfirm', { direccion, direccionID: undefined })
             } else {
               Alert.alert(
                 "Datos incompletos",
