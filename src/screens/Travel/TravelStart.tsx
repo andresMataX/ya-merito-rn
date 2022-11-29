@@ -13,8 +13,8 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelStart = ({ navigation }: Props) => {
 
-  const { favoritoState, getFavoritos, setFavorito } = useContext(FavoritoContext);
-  const { favoritos } = favoritoState;
+  const { favoritoState, getFavoritos, setFavorito, getDireccion } = useContext(FavoritoContext);
+  const { isLoading, favoritos, favoritoSeleccionado, direccion: direccionFav } = favoritoState;
 
   const { onChange, direccion } = useForm({
     direccion: ''
@@ -55,12 +55,23 @@ export const TravelStart = ({ navigation }: Props) => {
     return null;
   }
 
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
+
   const renderFavorito = (data: Favorite) => {
     return (
       <TouchableOpacity
         onPress={() => {
           setFavorito(data)
-          navigation.navigate('TravelConfirm', { direccion: data.alias })
+          getDireccion(favoritoSeleccionado.id_direccion).then(() => {
+            navigation.navigate('TravelConfirm', { direccion: data.alias })
+          })
         }}
         style={styles.favorito}
       >

@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useForm } from '../../hooks/useForm';
+import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelConfirm = ({ navigation, route }: Props) => {
 
   const { direccion } = route.params!
+
+  const { favoritoState } = useContext(FavoritoContext);
+  const { direccion: direccionFav } = favoritoState;
 
   const { onChange, range } = useForm({
     range: 1500
