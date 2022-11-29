@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useLocation } from '../../hooks/useLocation';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelConfirm = ({ navigation }: Props) => {
 
+  const { position, startForegroundUpdate } = useLocation();
+
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
   });
+
+  useEffect(() => {
+    startForegroundUpdate()
+  }, [])
 
   if (!fontsLoaded) {
     return null;
@@ -21,7 +28,9 @@ export const TravelConfirm = ({ navigation }: Props) => {
   return (
     <View style={styles.mainContainer}>
 
-      <Maps />
+      {
+        (position) && <Maps lat={position.latitude} lng={position.longitude} />
+      }
 
       <View style={{ height: 16 }} />
 

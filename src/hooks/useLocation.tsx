@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
-
-interface Locations {
-  coords: Location.LocationObjectCoords,
-  timestamp: Date
-}
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME"
 let foregroundSubscription: { remove: any } | null = null
@@ -40,6 +34,7 @@ export const useLocation = () => {
 
   // Start location tracking in foreground
   const startForegroundUpdate = async () => {
+
     // Check if foreground permission is granted
     const { granted } = await Location.getForegroundPermissionsAsync()
     if (!granted) {
