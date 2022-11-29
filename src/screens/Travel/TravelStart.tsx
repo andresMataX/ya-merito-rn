@@ -69,7 +69,7 @@ export const TravelStart = ({ navigation }: Props) => {
       <TouchableOpacity
         onPress={() => {
           getDireccion(data.id_direccion).then(() => {
-            navigation.navigate('TravelConfirm', { direccion: data.alias })
+            navigation.navigate('TravelConfirm', { direccion: data.alias, direccionID: data.id_direccion })
           })
         }}
         style={styles.favorito}

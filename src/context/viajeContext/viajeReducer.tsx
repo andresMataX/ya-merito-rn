@@ -19,6 +19,11 @@ export const viajeReducer = (state: ViajeState, action: ViajeAction): ViajeState
         ...state,
         viajes: action.payload
       }
+    case 'postViajes':
+      return {
+        ...state,
+        viajes: [...state.viajes, action.payload]
+      }
     case 'logout':
       return {
         isLoading: false,

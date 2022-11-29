@@ -71,9 +71,11 @@ export const ViajeProvider = ({ children }: { children: JSX.Element }) => {
 
     try {
 
-      await meritoAPI.post(`/api/viaje/${userId}`, {
+      const resp = await meritoAPI.post<Travel>(`/api/viaje/${userId}`, {
         direccion
       })
+
+      dispatch({ type: 'postViajes', payload: resp.data });
 
       dispatch({ type: 'loadingState', payload: false });
 

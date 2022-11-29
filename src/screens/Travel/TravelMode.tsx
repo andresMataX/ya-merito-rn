@@ -10,12 +10,14 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelMode = ({ navigation, route }: Props) => {
 
-  const { range, coordsMarker, direccion } = route.params!
+  const { range, coordsMarker, direccion, direccionID } = route.params!
 
   const { position, startForegroundUpdate } = useLocation();
 
   useEffect(() => {
     startForegroundUpdate()
+
+    console.log({ direccionID });
   }, [])
 
   const [distanciaActual, setDistanciaActual] = useState(0.0)
