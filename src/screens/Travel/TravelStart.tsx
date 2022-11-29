@@ -113,7 +113,7 @@ export const TravelStart = ({ navigation }: Props) => {
             style={styles.input}
             placeholder="Ingresa la dirección de destino"
             placeholderTextColor="#5A5A5A"
-            onChangeText={(value) => onChange(value, 'direccion')}
+            onChangeText={(value) => onChange(value.trim(), 'direccion')}
           />
         </View>
       </View>

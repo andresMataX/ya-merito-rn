@@ -60,11 +60,7 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
       <View style={styles.formContainer}>
         <View style={styles.destinoContainer}>
           <Text style={styles.label}>Destino</Text>
-          <TextInput
-            style={styles.input}
-            editable={false}
-            value={direccion}
-          />
+          <Text style={styles.input}>{direccion}</Text>
         </View>
 
         <View style={{ height: 16 }} />
@@ -104,7 +100,8 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
             if (range > 100 && range < 10000) {
               navigation.navigate('TravelMode', {
                 range,
-                coordsMarker: coords
+                coordsMarker: coords,
+                direccion
               })
             } else {
               Alert.alert(

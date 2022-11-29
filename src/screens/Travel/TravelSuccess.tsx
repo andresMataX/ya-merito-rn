@@ -6,7 +6,9 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
-export const TravelSuccess = ({ navigation }: Props) => {
+export const TravelSuccess = ({ navigation, route }: Props) => {
+
+  console.log(route.params);
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
