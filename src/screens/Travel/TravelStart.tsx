@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { Maps } from '../../components/Travel/Maps';
 import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
 import { Favorite } from '../../interfaces/Favorite/Favorite';
+import { useLocation } from '../../hooks/useLocation';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -14,24 +15,14 @@ export const TravelStart = ({ navigation }: Props) => {
   const { favoritoState, getFavoritos } = useContext(FavoritoContext);
   const { favoritos } = favoritoState;
 
-  const renderFavorito = (data: Favorite) => {
-    return (
-      <View style={styles.favorito}>
-        <Icon name={`${data.icono}-outline`} size={32} />
-        <View style={{ width: 8 }} />
-        <View style={styles.destinoContainer}>
-          <Text style={styles.destinoTitle}>{data.alias}</Text>
-        </View>
-      </View>
-    )
-  }
-
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
     MaliMedium: require('../../../assets/fonts/Mali-Medium.ttf')
   });
+
+  const { position, startForegroundUpdate } = useLocation();
 
   // Botón para menú hamburguesa
   useEffect(() => {
@@ -51,6 +42,7 @@ export const TravelStart = ({ navigation }: Props) => {
 
   useEffect(() => {
     getFavoritos()
+    startForegroundUpdate()
   }, [])
 
 
@@ -58,10 +50,29 @@ export const TravelStart = ({ navigation }: Props) => {
     return null;
   }
 
+  const renderFavorito = (data: Favorite) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+
+        }}
+        style={styles.favorito}
+      >
+        <Icon name={`${data.icono}-outline`} size={32} />
+        <View style={{ width: 8 }} />
+        <View style={styles.destinoContainer}>
+          <Text style={styles.destinoTitle}>{data.alias}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <View style={styles.mainContainer}>
 
-      <Maps />
+      {
+        (position) && <Maps lat={position.latitude} lng={position.longitude} />
+      }
 
       <View style={{ height: 16 }} />
 
