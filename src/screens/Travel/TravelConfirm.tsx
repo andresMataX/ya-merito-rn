@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert, Button } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
@@ -24,6 +24,8 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
   const { onChange, range } = useForm({
     range: 1500
   })
+
+  const [r, setR] = useState(0);
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -51,7 +53,7 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
           lat: coords.lat,
           lng: coords.lng
         }}
-        // rango={range}
+        rango={(r) ? r : 0}
         circulo
       />
 
@@ -81,6 +83,12 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
               } else {
                 onChange(0, 'range')
               }
+            }}
+          />
+          <Button
+            title='Editar rango'
+            onPress={() => {
+              setR(range)
             }}
           />
         </View>

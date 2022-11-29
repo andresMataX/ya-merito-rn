@@ -41,19 +41,15 @@ export const Maps = ({ coords, circulo = false, rango }: Props) => {
             longitude: coords.lng,
           }}
         />
-        {
-          (circulo && rango) && (
-            <Circle
-              center={{
-                latitude: coords.lat,
-                longitude: coords.lng
-              }}
-              radius={1500}
-              strokeWidth={2}
-              fillColor="rgba(0,0,0,0.3)"
-            />
-          )
-        }
+        <Circle
+          center={{
+            latitude: coords.lat,
+            longitude: coords.lng
+          }}
+          radius={(rango) ? rango : 0}
+          strokeWidth={2}
+          fillColor="rgba(0,0,0,0.3)"
+        />
       </MapView>
     </View>
   )
