@@ -1,13 +1,30 @@
-import React, { useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, ScrollView } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 import { Maps } from '../../components/Travel/Maps';
+import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { Favorite } from '../../interfaces/Favorite/Favorite';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelStart = ({ navigation }: Props) => {
+
+  const { favoritoState, getFavoritos } = useContext(FavoritoContext);
+  const { favoritos } = favoritoState;
+
+  const renderFavorito = (data: Favorite) => {
+    return (
+      <View style={styles.favorito}>
+        <Icon name={`${data.icono}-outline`} size={32} />
+        <View style={{ width: 8 }} />
+        <View style={styles.destinoContainer}>
+          <Text style={styles.destinoTitle}>{data.alias}</Text>
+        </View>
+      </View>
+    )
+  }
 
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
@@ -31,6 +48,11 @@ export const TravelStart = ({ navigation }: Props) => {
       )
     })
   }, [])
+
+  useEffect(() => {
+    getFavoritos()
+  }, [])
+
 
   if (!fontsLoaded) {
     return null;
@@ -58,60 +80,26 @@ export const TravelStart = ({ navigation }: Props) => {
 
       <View style={{ height: 24 }} />
 
-      <ScrollView style={styles.favoritesContainer}>
-
-        <View style={styles.favorito}>
-          <Icon name='briefcase-outline' size={32} />
-          <View style={{ width: 8 }} />
-          <View style={styles.destinoContainer}>
-            <Text style={styles.destinoTitle}>Trabajo</Text>
-            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-          </View>
-        </View>
-
-        <View style={styles.favorito}>
-          <Icon name='briefcase-outline' size={32} />
-          <View style={{ width: 8 }} />
-          <View style={styles.destinoContainer}>
-            <Text style={styles.destinoTitle}>Trabajo</Text>
-            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-          </View>
-        </View>
-
-        <View style={styles.favorito}>
-          <Icon name='briefcase-outline' size={32} />
-          <View style={{ width: 8 }} />
-          <View style={styles.destinoContainer}>
-            <Text style={styles.destinoTitle}>Trabajo</Text>
-            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-          </View>
-        </View>
-
-        <View style={styles.favorito}>
-          <Icon name='briefcase-outline' size={32} />
-          <View style={{ width: 8 }} />
-          <View style={styles.destinoContainer}>
-            <Text style={styles.destinoTitle}>Trabajo</Text>
-            <Text style={styles.destinoDireccion}>Av. Manuel L. Barragán 510, Residencial Anahuac 4to Sector, 66450 Monterrey, N.L.</Text>
-          </View>
-        </View>
-
-      </ScrollView>
+      <View style={styles.favoritesContainer}>
+        <FlatList
+          data={favoritos}
+          renderItem={({ item }) => renderFavorito(item)}
+          keyExtractor={({ id }) => id.toString()}
+        />
+      </View>
 
       <View style={{ height: 8 }} />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelMode')}
+          onPress={() => navigation.navigate('TravelConfirm')}
         >
           <Text style={styles.buttonText}>Iniciar</Text>
           <View style={{ width: 8 }} />
           <Icon name="navigate-circle-outline" size={28} />
         </TouchableOpacity>
       </View>
-
-      <View style={{ height: 32 }} />
 
     </View>
   )
@@ -121,12 +109,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
     flex: 1
-  },
-  mapContainer: {
-    height: '40%',
-    width: '80%',
-    borderColor: 'black',
-    borderWidth: 2,
   },
   formContainer: {
     width: '80%',
@@ -155,6 +137,7 @@ const styles = StyleSheet.create({
   },
   favoritesContainer: {
     width: '80%',
+    height: '25%',
   },
   favorito: {
     padding: 8,
@@ -162,8 +145,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: 'black',
-    borderBottomWidth: 1,
   },
   destinoContainer: {
     flex: 1,
@@ -172,11 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'MaliMedium',
     lineHeight: 28,
-  },
-  destinoDireccion: {
-    fontSize: 12,
-    fontFamily: 'MaliLight',
-    lineHeight: 20,
   },
   buttonContainer: {
     width: '80%',

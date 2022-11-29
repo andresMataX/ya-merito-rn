@@ -25,7 +25,7 @@ export const Maps = () => {
 
 const styles = StyleSheet.create({
   mapContainer: {
-    height: '43%',
+    height: '47%',
     width: '80%',
     borderColor: 'black',
     borderWidth: 2,
