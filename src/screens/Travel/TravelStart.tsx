@@ -13,8 +13,8 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelStart = ({ navigation }: Props) => {
 
-  const { favoritoState, getFavoritos, setFavorito, getDireccion } = useContext(FavoritoContext);
-  const { isLoading, favoritos, favoritoSeleccionado, direccion: direccionFav } = favoritoState;
+  const { favoritoState, getFavoritos, setDireccion, getDireccion } = useContext(FavoritoContext);
+  const { isLoading, favoritos } = favoritoState;
 
   const { onChange, direccion } = useForm({
     direccion: ''
@@ -130,8 +130,8 @@ export const TravelStart = ({ navigation }: Props) => {
           style={styles.button}
           onPress={() => {
             if (direccion) {
+              setDireccion()
               navigation.navigate('TravelConfirm', { direccion })
-
             } else {
               Alert.alert(
                 "Datos incompletos",
