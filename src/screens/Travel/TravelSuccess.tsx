@@ -11,21 +11,16 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelSuccess = ({ navigation, route }: Props) => {
 
-  const { direccion, direccionID } = route.params!
+  const { direccion, direccionAPI } = route.params!
 
   const { authState } = useContext(AuthContext);
   const { userID } = authState;
 
-  const { favoritoState, getDireccion } = useContext(FavoritoContext);
-  const { direccion: direccionBD } = favoritoState;
-
   const { postViaje } = useContext(ViajeContext);
 
   useEffect(() => {
-    if (direccionID) {
-      getDireccion(direccionID).then(() => {
-        postViaje(userID, direccionBD)
-      })
+    if (direccionAPI) {
+      postViaje(userID, direccionAPI)
     }
   }, [])
 
@@ -61,11 +56,8 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
         <View style={{ height: 16 }} />
 
         <View style={styles.favoritoContainer}>
-          <Text style={styles.rangoText}>Marcar destino como favorito: </Text>
+          <Text style={styles.rangoText}>El viaje se ha registrado exitosamente</Text>
           <View style={{ width: 8 }} />
-          <TouchableOpacity>
-            <Icon name='star-outline' size={16} />
-          </TouchableOpacity>
         </View>
       </View>
 

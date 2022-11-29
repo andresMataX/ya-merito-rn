@@ -12,12 +12,12 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelConfirm = ({ navigation, route }: Props) => {
 
-  const { direccion, direccionID } = route.params!
+  const { direccion } = route.params!
 
   const { favoritoState } = useContext(FavoritoContext);
   const { direccion: direccionFav } = favoritoState;
 
-  const { coords, isLoading } = useCoords(
+  const { coords, isLoading, direccion: direccionAPI } = useCoords(
     (direccionFav) ? (direccionFav) : (direccion)
   )
 
@@ -102,7 +102,7 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
                 range,
                 coordsMarker: coords,
                 direccion,
-                direccionID
+                direccionAPI
               })
             } else {
               Alert.alert(

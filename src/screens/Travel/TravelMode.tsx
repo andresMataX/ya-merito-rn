@@ -10,7 +10,7 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelMode = ({ navigation, route }: Props) => {
 
-  const { range, coordsMarker, direccion, direccionID } = route.params!
+  const { range, coordsMarker, direccion, direccionAPI } = route.params!
 
   const { position, startForegroundUpdate } = useLocation();
 
@@ -34,7 +34,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
     if (distanciaActual < range) {
       navigation.navigate('TravelSuccess', {
         direccion,
-        direccionID
+        direccionAPI
       })
     }
   }, [position])

@@ -5,11 +5,13 @@ import { Alert } from 'react-native';
 export const useCoords = (address: string) => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const [direccion, setDireccion] = useState("");
 
   const [coords, setCoords] = useState<Location>({
     lat: 0,
     lng: 0
   });
+
 
   const getCoords = async (address: string) => {
 
@@ -23,6 +25,8 @@ export const useCoords = (address: string) => {
 
       const lat = data.results[0].geometry.location.lat;
       const lng = data.results[0].geometry.location.lng;
+
+      setDireccion(data.results[0].formatted_address)
 
       setCoords({
         lat,
@@ -58,6 +62,7 @@ export const useCoords = (address: string) => {
 
   return {
     coords,
-    isLoading
+    isLoading,
+    direccion
   }
 }
