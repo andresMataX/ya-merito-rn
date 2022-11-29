@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import MapView, { PROVIDER_GOOGLE, Marker, Camera } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Camera, Circle } from 'react-native-maps';
 import { Location } from '../../interfaces/Travel/PlacesAPI';
 
 export const Maps = (coords: Location) => {
@@ -34,6 +34,15 @@ export const Maps = (coords: Location) => {
             latitude: coords.lat,
             longitude: coords.lng,
           }}
+        />
+        <Circle
+          center={{
+            latitude: coords.lat,
+            longitude: coords.lng
+          }}
+          radius={1500}
+          strokeWidth={2}
+          fillColor="rgba(0,0,0,0.3)"
         />
       </MapView>
     </View>
