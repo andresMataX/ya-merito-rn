@@ -88,7 +88,12 @@ export const TravelStart = ({ navigation }: Props) => {
 
       {
         (position) ? (
-          <Maps lat={position.latitude} lng={position.longitude} />
+          <Maps
+            coords={{
+              lat: position.latitude,
+              lng: position.longitude
+            }}
+          />
         ) : (
           <View
             style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >

@@ -46,7 +46,14 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
   return (
     <View style={styles.mainContainer}>
 
-      <Maps lat={coords.lat} lng={coords.lng} />
+      <Maps
+        coords={{
+          lat: coords.lat,
+          lng: coords.lng
+        }}
+        // rango={range}
+        circulo
+      />
 
       <View style={{ height: 16 }} />
 
