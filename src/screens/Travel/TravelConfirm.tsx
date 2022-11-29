@@ -16,6 +16,15 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
   const { favoritoState } = useContext(FavoritoContext);
   const { direccion: direccionFav } = favoritoState;
 
+  useEffect(() => {
+    if (direccionFav) {
+      console.log({ direccionFav });
+    } else {
+      console.log({ direccion });
+    }
+  }, [])
+
+
   const { onChange, range } = useForm({
     range: 1500
   })

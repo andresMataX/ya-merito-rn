@@ -32,6 +32,7 @@ export interface FavoritoContextProps {
   deleteFavorito: (favoritoID: number) => Promise<void>,
   getDireccion: (direccionID: number) => Promise<void>,
   putFavorito: ({ alias, icono }: NuevoFavorito, favoritoID: number) => Promise<void>,
+  setDireccion: () => void
 }
 
 export const FavoritoContext = createContext({} as FavoritoContextProps);
@@ -229,6 +230,13 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
 
   }
 
+
+  const setDireccion = () => {
+
+    dispatch({ type: 'setDireccion', payload: '' });
+
+  }
+
   return (
     <FavoritoContext.Provider
       value={{
@@ -240,6 +248,7 @@ export const FavoritoProvider = ({ children }: { children: JSX.Element }) => {
         deleteFavorito,
         getDireccion,
         putFavorito,
+        setDireccion,
       }}
     >
       {children}

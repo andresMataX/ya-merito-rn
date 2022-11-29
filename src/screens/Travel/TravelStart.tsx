@@ -68,8 +68,7 @@ export const TravelStart = ({ navigation }: Props) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          setFavorito(data)
-          getDireccion(favoritoSeleccionado.id_direccion).then(() => {
+          getDireccion(data.id_direccion).then(() => {
             navigation.navigate('TravelConfirm', { direccion: data.alias })
           })
         }}
@@ -132,6 +131,7 @@ export const TravelStart = ({ navigation }: Props) => {
           onPress={() => {
             if (direccion) {
               navigation.navigate('TravelConfirm', { direccion })
+
             } else {
               Alert.alert(
                 "Datos incompletos",
