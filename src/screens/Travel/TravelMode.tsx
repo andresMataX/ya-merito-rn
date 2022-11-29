@@ -12,11 +12,10 @@ export const TravelMode = ({ navigation, route }: Props) => {
 
   const { range, coordsMarker, direccion } = route.params!
 
-  const { position, startForegroundUpdate, startBackgroundUpdate, stopForegroundUpdate, stopBackgroundUpdate } = useLocation();
+  const { position, startForegroundUpdate } = useLocation();
 
   useEffect(() => {
     startForegroundUpdate()
-    startBackgroundUpdate()
   }, [])
 
   const [distanciaActual, setDistanciaActual] = useState(0.0)
@@ -31,15 +30,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
       })
     )
 
-    // if (distanciaActual < range && distanciaActual !== 0) {
-
-    //   navigation.navigate('TravelSuccess', {
-    //     direccion
-    //   })
-    // }
-    if (distanciaActual < range) {
-      stopBackgroundUpdate()
-      stopForegroundUpdate()
+    if (distanciaActual < range && distanciaActual !== 0) {
       navigation.navigate('TravelSuccess', {
         direccion
       })

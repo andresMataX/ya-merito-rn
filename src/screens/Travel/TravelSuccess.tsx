@@ -8,7 +8,7 @@ interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelSuccess = ({ navigation, route }: Props) => {
 
-  console.log(route.params);
+  const { direccion } = route.params!
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -35,18 +35,18 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
       <View style={styles.infoContainer}>
         <View style={styles.destinoContainer}>
           <Text style={styles.destinoTitle}>Destino</Text>
-          <Text style={styles.destinoDireccion}>Escuela</Text>
+          <Text style={styles.destinoDireccion}>{direccion}</Text>
         </View>
 
-        <View style={{ height: 8 }} />
+        <View style={{ height: 16 }} />
 
-        <View style={styles.favoritoContainer}>
+        {/* <View style={styles.favoritoContainer}>
           <Text style={styles.rangoText}>Marcar destino como favorito: </Text>
           <View style={{ width: 8 }} />
           <TouchableOpacity>
             <Icon name='star-outline' size={16} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
 
       <View style={{ height: 48 }} />
