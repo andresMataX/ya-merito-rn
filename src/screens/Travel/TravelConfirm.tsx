@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useForm } from '../../hooks/useForm';
 import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
+import { useCoords } from '../../hooks/useCoords';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -16,14 +17,9 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
   const { favoritoState } = useContext(FavoritoContext);
   const { direccion: direccionFav } = favoritoState;
 
-  useEffect(() => {
-    if (direccionFav) {
-      console.log({ direccionFav });
-    } else {
-      console.log({ direccion });
-    }
-  }, [])
-
+  const { coords, isLoading } = useCoords(
+    (direccionFav) ? (direccionFav) : (direccion)
+  )
 
   const { onChange, range } = useForm({
     range: 1500
@@ -38,10 +34,19 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
     return null;
   }
 
+  if (isLoading) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+        <ActivityIndicator color="#000" size={75} />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.mainContainer}>
 
-      {/* <Maps lat={position.latitude} lng={position.longitude} /> */}
+      <Maps lat={coords.lat} lng={coords.lng} />
 
       <View style={{ height: 16 }} />
 
