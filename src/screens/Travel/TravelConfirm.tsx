@@ -25,8 +25,6 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
     range: 1500
   })
 
-  const [r, setR] = useState(0);
-
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
@@ -53,7 +51,7 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
           lat: coords.lat,
           lng: coords.lng
         }}
-        rango={(r) ? r : 0}
+        rango={(range) ? range : 0}
         circulo
       />
 
@@ -83,12 +81,6 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
               } else {
                 onChange(0, 'range')
               }
-            }}
-          />
-          <Button
-            title='Editar rango'
-            onPress={() => {
-              setR(range)
             }}
           />
         </View>
