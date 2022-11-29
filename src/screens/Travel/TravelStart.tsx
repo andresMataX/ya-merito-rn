@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
@@ -71,7 +71,14 @@ export const TravelStart = ({ navigation }: Props) => {
     <View style={styles.mainContainer}>
 
       {
-        (position) && <Maps lat={position.latitude} lng={position.longitude} />
+        (position) ? (
+          <Maps lat={position.latitude} lng={position.longitude} />
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <ActivityIndicator color="#000" size={75} />
+          </View>
+        )
       }
 
       <View style={{ height: 16 }} />

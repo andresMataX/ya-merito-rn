@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
@@ -29,7 +29,14 @@ export const TravelConfirm = ({ navigation }: Props) => {
     <View style={styles.mainContainer}>
 
       {
-        (position) && <Maps lat={position.latitude} lng={position.longitude} />
+        (position) ? (
+          <Maps lat={position.latitude} lng={position.longitude} />
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <ActivityIndicator color="#000" size={75} />
+          </View>
+        )
       }
 
       <View style={{ height: 16 }} />
