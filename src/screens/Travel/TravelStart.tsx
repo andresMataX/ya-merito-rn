@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, TextInput, FlatList, ActivityIndicator } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, TextInput, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
@@ -7,6 +7,7 @@ import { Maps } from '../../components/Travel/Maps';
 import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
 import { Favorite } from '../../interfaces/Favorite/Favorite';
 import { useLocation } from '../../hooks/useLocation';
+import { useForm } from '../../hooks/useForm';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
@@ -14,6 +15,10 @@ export const TravelStart = ({ navigation }: Props) => {
 
   const { favoritoState, getFavoritos } = useContext(FavoritoContext);
   const { favoritos } = favoritoState;
+
+  const { onChange, direccion } = useForm({
+    direccion: ''
+  })
 
   const [fontsLoaded] = useFonts({
     MaliExtraLight: require('../../../assets/fonts/Mali-ExtraLight.ttf'),
@@ -92,6 +97,7 @@ export const TravelStart = ({ navigation }: Props) => {
             style={styles.input}
             placeholder="Ingresa la dirección de destino"
             placeholderTextColor="#5A5A5A"
+            onChangeText={(value) => onChange(value, 'direccion')}
           />
         </View>
       </View>
@@ -111,7 +117,24 @@ export const TravelStart = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelConfirm')}
+          onPress={() => {
+            if (direccion) {
+              navigation.navigate('TravelConfirm', { direccion })
+            } else {
+              Alert.alert(
+                "Datos incompletos",
+                "Favor de escribir una dirección.",
+                [
+                  {
+                    text: "Ok",
+                  }
+                ],
+                {
+                  cancelable: true,
+                }
+              )
+            }
+          }}
         >
           <Text style={styles.buttonText}>Iniciar</Text>
           <View style={{ width: 8 }} />

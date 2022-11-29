@@ -4,22 +4,17 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useLocation } from '../../hooks/useLocation';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
-export const TravelConfirm = ({ navigation }: Props) => {
+export const TravelConfirm = ({ navigation, route }: Props) => {
 
-  const { position, startForegroundUpdate } = useLocation();
+  const { direccion } = route.params!
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
     MaliBold: require('../../../assets/fonts/Mali-Bold.ttf'),
   });
-
-  useEffect(() => {
-    startForegroundUpdate()
-  }, [])
 
   if (!fontsLoaded) {
     return null;
@@ -28,16 +23,7 @@ export const TravelConfirm = ({ navigation }: Props) => {
   return (
     <View style={styles.mainContainer}>
 
-      {
-        (position) ? (
-          <Maps lat={position.latitude} lng={position.longitude} />
-        ) : (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-            <ActivityIndicator color="#000" size={75} />
-          </View>
-        )
-      }
+      {/* <Maps lat={position.latitude} lng={position.longitude} /> */}
 
       <View style={{ height: 16 }} />
 
@@ -47,7 +33,7 @@ export const TravelConfirm = ({ navigation }: Props) => {
           <TextInput
             style={styles.input}
             editable={false}
-            value={"Escuela"}
+            value={direccion}
           />
         </View>
 
@@ -85,7 +71,7 @@ export const TravelConfirm = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-    </View>
+    </View >
   )
 }
 
