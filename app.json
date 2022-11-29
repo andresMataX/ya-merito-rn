@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "ya-merito-rn",
-    "slug": "ya-merito-rn",
+    "name": "¡Ya Merito!",
+    "slug": "¡Ya Merito!",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
