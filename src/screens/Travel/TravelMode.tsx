@@ -6,7 +6,9 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
-export const TravelMode = ({ navigation }: Props) => {
+export const TravelMode = ({ navigation, route }: Props) => {
+
+  const { range } = route.params!
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -40,7 +42,7 @@ export const TravelMode = ({ navigation }: Props) => {
 
         <View style={styles.destinoContainer}>
           <Text style={styles.distanciaText}>Distancia con el destino: 6200 m</Text>
-          <Text style={styles.rangoText}>Rango seleccionado: 1500 m</Text>
+          <Text style={styles.rangoText}>Rango seleccionado: {range} m</Text>
         </View>
       </View>
 

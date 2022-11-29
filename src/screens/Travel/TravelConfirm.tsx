@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Maps } from '../../components/Travel/Maps';
 import { useFonts } from 'expo-font';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useForm } from '../../hooks/useForm';
 
 interface Props extends DrawerScreenProps<any, any> { }
 
 export const TravelConfirm = ({ navigation, route }: Props) => {
 
   const { direccion } = route.params!
+
+  const { onChange, range } = useForm({
+    range: 1500
+  })
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
@@ -43,8 +48,15 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
           <Text style={styles.label}>Zona de alarma (m)</Text>
           <TextInput
             style={styles.input}
-            value={"900"}
+            value={range.toString()}
             keyboardType="decimal-pad"
+            onChangeText={(value) => {
+              if (value && value.length < 6) {
+                onChange(Number.parseInt(value), 'range')
+              } else {
+                onChange(0, 'range')
+              }
+            }}
           />
         </View>
       </View>
@@ -63,7 +75,26 @@ export const TravelConfirm = ({ navigation, route }: Props) => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('TravelMode')}
+          onPress={() => {
+            if (range > 100 && range < 10000) {
+              navigation.navigate('TravelMode', {
+                range
+              })
+            } else {
+              Alert.alert(
+                "Rango inválido",
+                "Favor de escribir un rango mayor a 100 m y menor a 10,000 m",
+                [
+                  {
+                    text: "Ok",
+                  }
+                ],
+                {
+                  cancelable: true,
+                }
+              )
+            }
+          }}
         >
           <Text style={styles.buttonText}>Aceptar</Text>
           <View style={{ width: 8 }} />
