@@ -7,13 +7,6 @@ interface Props {
 
 export const medirDistancia = ({ lat1 = 1, lat2, lon1 = 1, lon2 }: Props) => {
 
-  console.log({
-    lat1,
-    lat2,
-    lon1,
-    lon2
-  });
-
   const radioTierra = 6378.137;
 
   const dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
