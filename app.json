@@ -34,10 +34,16 @@
         "FOREGROUND_SERVICE",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "package": "com.a_mata.yameritorn"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a3f41754-6375-4db0-aaa3-26d2a2356046"
+      }
     }
   }
 }
