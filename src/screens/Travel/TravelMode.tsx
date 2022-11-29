@@ -29,6 +29,10 @@ export const TravelMode = ({ navigation, route }: Props) => {
         lon2: coordsMarker.lng
       })
     )
+
+    if (distanciaActual < range) {
+      navigation.navigate('TravelSuccess')
+    }
   }, [position])
 
 
@@ -72,8 +76,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          // onPress={() => navigation.goBack()}
-          onPress={() => navigation.navigate('TravelSuccess')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name='close-outline' size={75} />
         </TouchableOpacity>
