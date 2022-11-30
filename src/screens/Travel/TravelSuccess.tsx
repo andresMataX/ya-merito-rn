@@ -28,13 +28,17 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
   }, [])
 
   const agendarPushNotification = async () => {
+
+    let t = new Date()
+    t.setSeconds(t.getSeconds() + 5)
+
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: '¡Ya merito llegas!',
           body: "Estás llegando a tu destino"
         },
-        trigger: new Date().getTime() + 1 * 60000
+        trigger: t
       })
       console.log('Notificación agendada');
     } catch (e) {
