@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
+import * as Notifications from 'expo-notifications';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
-import { FavoritoContext } from '../../context/favoritoContext/FavoritoContext';
 import { ViajeContext } from '../../context/viajeContext/ViajeContext';
 import { AuthContext } from '../../context/authContext/AuthContext';
 
@@ -21,9 +21,26 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
   useEffect(() => {
     if (direccionAPI) {
       postViaje(userID, direccionAPI)
+      agendarPushNotification().then(() => {
+
+      })
     }
   }, [])
 
+  const agendarPushNotification = async () => {
+    try {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: '¡Ya merito llegas!',
+          body: "Estás llegando a tu destino"
+        },
+        trigger: new Date()
+      })
+      console.log('Notificación agendada');
+    } catch (e) {
+      console.log('La alerta falló');
+    }
+  }
 
   const [fontsLoaded] = useFonts({
     MaliLight: require('../../../assets/fonts/Mali-Light.ttf'),
