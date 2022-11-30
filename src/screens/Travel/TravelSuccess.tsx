@@ -35,8 +35,8 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: '¡Ya merito llegas!',
-          body: "Estás llegando a tu destino"
+          title: '¡¡¡Ya Merito llegas!!!',
+          body: "Estás llegando a tu destino, DESPIERTA"
         },
         trigger: t
       })
