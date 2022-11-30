@@ -64,7 +64,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
       <View style={styles.infoContainer}>
         <View style={styles.destinoContainer}>
           <Text style={styles.destinoTitle}>Destino</Text>
-          <Text style={styles.destinoDireccion}>Escuela</Text>
+          <Text style={styles.destinoDireccion}>{direccion}</Text>
         </View>
 
         <View style={{ height: 8 }} />
