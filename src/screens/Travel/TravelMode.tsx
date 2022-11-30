@@ -30,8 +30,7 @@ export const TravelMode = ({ navigation, route }: Props) => {
       })
     )
 
-    //&& distanciaActual !== 0
-    if (distanciaActual < range) {
+    if (distanciaActual < range && distanciaActual !== 0) {
       navigation.navigate('TravelSuccess', {
         direccion,
         direccionAPI
