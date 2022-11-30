@@ -34,7 +34,7 @@ export const TravelSuccess = ({ navigation, route }: Props) => {
           title: '¡Ya merito llegas!',
           body: "Estás llegando a tu destino"
         },
-        trigger: new Date()
+        trigger: new Date().getTime() + 1 * 60000
       })
       console.log('Notificación agendada');
     } catch (e) {

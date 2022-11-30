@@ -1,11 +1,22 @@
-import React, { useContext } from 'react';
-import { View, Image, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Image, StyleSheet, Text, ActivityIndicator, Platform } from 'react-native';
 import { useFonts } from 'expo-font';
 import { FormLogin } from '../../components/Auth/FormLogin';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { AuthContext } from '../../context/authContext/AuthContext';
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import moment from 'moment';
 
 interface Props extends DrawerScreenProps<any, any> { }
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowAlert: true
+  })
+})
 
 export const Login = ({ navigation, route }: Props) => {
 
@@ -15,6 +26,42 @@ export const Login = ({ navigation, route }: Props) => {
   //   MaliRegular: require('../../../assets/fonts/Mali-Regular.ttf'),
   //   MaliSemiBold: require('../../../assets/fonts/Mali-SemiBold.ttf')
   // });
+
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        console.log('Fallando al obtener el token para push notifications por permisos');
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log({ token });
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      })
+    }
+
+    return token;
+  }
+
+  const [expoPushToken, setExpoPushToken] = useState<string | undefined>()
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token))
+  }, [])
+
 
   const { authState } = useContext(AuthContext);
   const { isLoading } = authState;
